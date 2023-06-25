@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<countries>
+    <country>
+        <name>Israel</name>
+        <flag>israel</flag>
+        <anthem>israel</anthem>
+        <short>population: 7 millions</short>
+        <details>
+            Israel
+            Country in Asia
+            Israel or, officially the State of Israel, is a country in Western Asia, situated at the southeastern shore of the Mediterranean Sea.
+            Capital: Jerusalem
+            Prime minister: Benjamin Netanyahu
+            Currency: Israeli new shekel
+            President: Reuven Rivlin
+            Official languages: Hebrew, Arabic
+        </details>
+    </country>
+    <country>
+        <name>France</name>
+        <flag>france</flag>
+        <anthem>france</anthem>
+        <short>population: 66 millions</short>
+        <details>
+            France
+            Country in Europe
+            France, officially the French Republic, is a unitary sovereign state comprising territory in western Europe and several overseas regions and territories.
+            Capital: Paris
+            Dialing code: +33
+            President: Franֳ§ois Hollande
+            Prime minister: Manuel Valls
+            Population: 66.03 million (2013)
+        </details>
+    </country>
+    <country>
+        <name>Norway</name>
+        <flag>norway</flag>
+        <anthem>norway</anthem>
+        <short>population: 5 millions</short>
+        <details>
+            Norway
+            Country in Europe
+            Norway, officially the Kingdom of Norway, is a sovereign and unitary monarchy whose territory comprises the western portion of the Scandinavian Peninsula plus Jan Mayen and the Arctic archipelago of Svalbard. Wikipedia
+            Capital: Oslo
+            Currency: Norwegian krone
+            Population: 5.084 million (2013) World Bank
+            Official languages: Norwegian, Nynorsk, Bokmֳ¥l
+            Colleges and Universities: University of Oslo, more
+        </details>
+    </country>
+    <country>
+        <name>Greece</name>
+        <flag>greece</flag>
+        <anthem>greece</anthem>
+        <short>population: 11 millions</short>
+        <details>
+            Greece
+            Country in Europe
+            Greece, officially the Hellenic Republic and known since ancient times as Hellas, is a country located in southeastern Europe. According to the 2011 census, Greece's population is around 11 million.
+            Capital: Athens
+            Currency: Euro
+            Prime minister: Alexis Tsipras
+            Population: 11.03 million (2013) World Bank
+            Official language: Greek
+        </details>
+    </country>
+    <country>
+        <name>United States</name>
+        <flag>united_states</flag>
+        <anthem>united_states</anthem>
+        <short>population: 319 millions</short>
+        <details>
+            United States of America
+            Country
+            The United States of America, commonly referred to as the United States or America, is a federal republic consisting of 50 states and a federal district.
+            Capital: Washington, D.C.
+            Dialing code: +1
+            ISO code: USA
+            Population: 318.9 million (2014)
+            President: Barack Obama
+        </details>
+    </country>
+    <country>
+        <name>Germany</name>
+        <flag>germany</flag>
+        <anthem>germany</anthem>
+        <short>population: 80 millions</short>
+        <details>
+            Germany
+            Country in Europe
+            Germany, officially the Federal Republic of Germany, is a federal parliamentary republic in western-central Europe.
+            Capital: Berlin
+            Dialing code: +49
+            Currency: Euro
+            Population: 80.62 million (2013) World Bank
+            Chancellor: Angela Merkel
+        </details>
+    </country>
+    <country>
+        <name>Jordan</name>
+        <flag>jordan</flag>
+        <anthem>jordan</anthem>
+        <short>population: 6 millions</short>
+        <details>
+            Jordan
+            Country in Asia
+            Jordan, officially the Hashemite Kingdom of Jordan, is an Arab kingdom in the Middle East, on the East Bank of the Jordan River.
+            Capital: Amman
+            King: Abdullah II of Jordan
+            Prime minister: Abdullah Ensour
+            Continent: Asia
+            Population: 6.459 million (2013) World Bank
+            Official language: Arabic
+        </details>
+    </country>
+    <country>
+        <name>Brazil</name>
+        <flag>brazil</flag>
+        <anthem>brazil</anthem>
+        <short>population: 202 millions</short>
+        <details>
+            Brazil
+            Country in South America
+            Brazil, officially the Federative Republic of Brazil, is the largest country in both South America and the Latin American region. It is the world's fifth largest country, both by geographical area and by population.
+            Capital: Brasֳ­lia
+            Dialing code: +55
+            Currency: Brazilian real
+            President: Dilma Rousseff
+            Official language: Portuguese
+        </details>
+    </country>
+    <country>
+        <name>New Zealand</name>
+        <flag>new_zealand</flag>
+        <anthem>new_zealand</anthem>
+        <short>population: 4 millions</short>
+        <details>
+            New Zealand
+            Country in Oceania
+            New Zealand is an island country in the southwestern Pacific Ocean. The country geographically comprises two main landmasses ג€“ that of the North Island, or Te Ika-a-Mִui, and the South Island, or Te Waipounamu ג€“ and numerous smaller islands.
+            Capital: Wellington
+            Dialing code: +64
+            Currency: New Zealand dollar
+            Population: 4.471 million (2013) World Bank
+            Continent: Oceania
+        </details>
+    </country>
+    <country>
+        <name>China</name>
+        <flag>china</flag>
+        <anthem>china</anthem>
+        <short>population: 1,357 millions</short>
+        <details>
+            China
+            Country in Asia
+            China, officially the People's Republic of China, is a sovereign state located in East Asia. It is the world's most populous country, with a population of over 1.35 billion. Wikipedia
+            Capital: Beijing
+            Population: 1.357 billion (2013) World Bank
+            Currency: Renminbi
+            Gross domestic product: 9.24 trillion USD (2013) World Bank
+            President: Xi Jinping
+            GDP per capita: 6,807.43 USD (2013) World Bank
+        </details>
+    </country>
+    <country>
+        <name>Thailand</name>
+        <flag>thailand</flag>
+        <anthem>thailand</anthem>
+        <short>population: 67 millions</short>
+        <details>
+            Thailand
+            Country in Asia
+            Thailand, officially the Kingdom of Thailand, formerly known as Siam, is a country at the centre of the Indochina peninsula in Southeast Asia.
+            Capital: Bangkok
+            Dialing code: +66
+            ISO code: THA
+            Currency: Thai baht
+            Official language: Thai
+        </details>
+    </country>
+    <country>
+        <name>Switzerland</name>
+        <flag>switzerland</flag>
+        <anthem>switzerland</anthem>
+        <short>population: 8 millions</short>
+        <details>
+            Switzerland
+            Country in Europe
+            Switzerland, officially the Swiss Confederation, is a federal parliamentary republic consisting of 26 cantons, with Bern as the seat of the federal authorities, the so-called Bundesstadt.
+            Dialing code: +41
+            ISO code: CHE
+            Currency: Swiss franc
+            Official languages: French, German, Romansh, Italian
+            Colleges and Universities: ETH Zurich, University of Zurich, more
+        </details>
+    </country>
+    <country>
+        <name>Australia</name>
+        <flag>australia</flag>
+        <anthem>australia</anthem>
+        <short>population: 23 millions</short>
+        <details>
+            Australia
+            Country
+            Australia, officially the Commonwealth of Australia, is an Oceanian country comprising the mainland of the Australian continent, the island of Tasmania, and numerous smaller islands. It is the world's sixth-largest country by total area.
+            Capital: Canberra
+            Dialing code: +61
+            Currency: Australian dollar
+            Governor-general: Peter Cosgrove
+            Prime minister: Tony Abbott
+        </details>
+    </country>
+    <country>
+        <name>Romania</name>
+        <flag>romania</flag>
+        <anthem>romania</anthem>
+        <short>population: 20.3 millions</short>
+        <details>
+            Romania
+            Country in Europe
+            Romania is a central European country known for the forested region of Transylvania, preserved medieval towns such as Sighiֵoara and many fortified churches and castles, notably clifftop Bran Castle, long associated with the Dracula legend. The area is ringed by the Carpathian Mountains, which are popular for trekking, climbing, skiing and bathing in natural thermal spas.
+            Capital: Bucharest
+            Dialing code: +40
+            Currency: Romanian leu
+            Continent: Europe
+            Official language: Romanian
+        </details>
+    </country>
+    <country>
+        <name>Mexico</name>
+        <flag>mexico</flag>
+        <anthem>mexico</anthem>
+        <short>population: 119 millions</short>
+        <details>
+            Mexico
+            Country in North America
+            Mexico is a country between the U.S. and Central America beaches on its Pacific and Gulf of Mexico coastlines and a diverse landscape of mountains, deserts and jungles. Ancient ruins such as Teotihuacan (Aztec) and Chichen Itza (Mayan) are scattered throughout the country, as are Spanish colonial-era towns. In capital Mexico City, upscale shops, renowned museums and gourmet restaurants cater to modern life.
+            Capital: Mexico City
+            Dialing code: +52
+            Founded: September 27, 1821
+            Currency: Mexican peso
+            President: Enrique Peֳ±a Nieto
+        </details>
+    </country>
+</countries>

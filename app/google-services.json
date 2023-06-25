@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "676030831876",
+    "project_id": "gradesprojectfinal",
+    "storage_bucket": "gradesprojectfinal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676030831876:android:374c9ea4492e8b85594451",
+        "android_client_info": {
+          "package_name": "com.example.GradesProjectFinal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "676030831876-9nmgavv29bl4a8lejtmjpl2au1iftt6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATRm9nhEkbfKoIB_vk5X4YhGtqVzcz7ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "676030831876-9nmgavv29bl4a8lejtmjpl2au1iftt6n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
