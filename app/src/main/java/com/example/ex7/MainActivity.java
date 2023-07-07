@@ -9,16 +9,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends AppCompatActivity implements AllCoursesFrag.AllCoursesFragListener {
+public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGradesFragListener, AllCoursesFrag.AllCoursesFragListener {
 
-    DatabaseReference dbCourses;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbCourses = FirebaseDatabase.getInstance().getReference();
         setContentView(R.layout.activity_main);
         SelectSpecificCourseFrag fragB = (SelectSpecificCourseFrag) getSupportFragmentManager().findFragmentByTag("FRAGB");
         if ((getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)){
@@ -52,20 +48,58 @@ public class MainActivity extends AppCompatActivity implements AllCoursesFrag.Al
             showPreferences();
             return true;
         }
+        if(item.getItemId() == R.id.add_course){
+            showAllCourses();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
+
+
     @Override
-    public void OnClickCourse(){
+    public void clickCourseToAddGrade(Course course){
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
         {
+            Bundle args = new Bundle();
+            args.putString("name", course.getName());
+            args.putString("description", course.getDescription());
+            args.putFloat("grade", course.getGrade());
+            args.putFloat("credit", course.getCredit());
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
-                    .add(R.id.fragContainer, SelectSpecificCourseFrag.class, null,"FRAGB")
+                    .add(R.id.fragContainer, SelectSpecificCourseFrag.class, args,"FRAGB")
                     .addToBackStack("BBB")
                     .commit();
             getSupportFragmentManager().executePendingTransactions();
         }
+    }
+
+    @Override
+    public void viewGradeInformation(Course course){
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+        {
+            Bundle args = new Bundle();
+            args.putString("name", course.getName());
+            args.putString("description", course.getDescription());
+            args.putFloat("grade", course.getGrade());
+            args.putFloat("credit", course.getCredit());
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.fragContainer, SelectSpecificCourseFrag.class, args,"FRAGB")
+                    .addToBackStack("BBB")
+                    .commit();
+            getSupportFragmentManager().executePendingTransactions();
+        }
+    }
+
+    private void showAllCourses() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.fragContainer, AllCoursesFrag.class, null,"allCoursesFrag")
+                .addToBackStack("BBB")
+                .commit();
     }
 
     private void showPreferences() {
@@ -73,9 +107,10 @@ public class MainActivity extends AppCompatActivity implements AllCoursesFrag.Al
                 .beginTransaction()
                 .setReorderingAllowed(true)
                 .add(android.R.id.content, new MyPreferences(), "prefFrag")
-                .addToBackStack(null)
+                .addToBackStack("BBB")
                 .commit();
     }
+    
 
     @Override
     protected void onPause() {

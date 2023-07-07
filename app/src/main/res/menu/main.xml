@@ -2,9 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <item
+        android:id="@+id/add_course"
+        android:title="add course"
+        android:icon="@drawable/plus_icon"
+        app:showAsAction="ifRoom"/>
+
     <item
         android:id="@+id/settings"
         android:title="preference"
         android:icon="@drawable/settings_48"
         app:showAsAction="ifRoom"/>
+
+
 </menu>

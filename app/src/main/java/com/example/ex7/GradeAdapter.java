@@ -15,16 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
+public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> {
     private final Context context;
-    private final CoursesModel viewModel;
+    private final GradesModel viewModel;
     private ArrayList<Course> courseList = new ArrayList<>();
 
-    private AllCoursesFrag.AllCoursesFragListener listener;
+    private MyGradesFrag.myGradesFragListener listener;
     private int selectedPosition = RecyclerView.NO_POSITION;
     private boolean isSelected;
 
-    public CourseAdapter(Context context, FragmentActivity activity, CoursesModel viewModel, AllCoursesFrag.AllCoursesFragListener listener) {
+    public GradeAdapter(Context context, FragmentActivity activity, GradesModel viewModel, MyGradesFrag.myGradesFragListener listener) {
         this.viewModel = viewModel;
         this.context = context;
         this.listener = listener;
@@ -38,7 +38,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     @NonNull
     @Override
-    public CourseAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GradeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View courseView = inflater.inflate(R.layout.course_row, parent, false);
@@ -46,7 +46,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CourseAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GradeAdapter.ViewHolder holder, int position) {
         Course course = courseList.get(position);
         this.selectedPosition = this.viewModel.getPosition();
         if (this.selectedPosition == position)
@@ -63,7 +63,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     public void setCoursesList(ArrayList<Course> coursesList){
         this.courseList = coursesList;
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -104,7 +104,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 @Override
                 public void onClick(View view) {
                     viewModel.setItemSelected(position);
-                    listener.clickCourseToAddGrade(course);
+                    listener.viewGradeInformation(course);
                     notifyDataSetChanged();
                 }
             });

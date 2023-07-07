@@ -27,7 +27,7 @@ public class AllCoursesFrag extends Fragment{
 		}catch(ClassCastException e){
 			throw new ClassCastException("the class " +
 					context.getClass().getName() +
-					" must implements the interface 'FragAListener'");
+					" must implements the interface 'AllCoursesFragListener'");
 		}
 		super.onAttach(context);
 	}
@@ -49,7 +49,7 @@ public class AllCoursesFrag extends Fragment{
 	}
 
 	public interface AllCoursesFragListener{
-		void OnClickCourse();
+		void clickCourseToAddGrade(Course course);
 	}
 
 }

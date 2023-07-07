@@ -4,55 +4,48 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.ArraySet;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-public class CoursesModel extends AndroidViewModel {
+public class GradesModel extends AndroidViewModel {
     MutableLiveData<ArrayList<Course>> courseLiveData;
     MutableLiveData<Integer> itemSelectedLive;
     Integer itemSelected;
-    private DatabaseReference dbCourses;
+
     ArrayList<Course> courseList = new ArrayList<>();
 
-
-    public CoursesModel(Application app) {
+    public GradesModel(Application app) {
         super(app);
         this.courseLiveData = new MutableLiveData<>();
         this.itemSelectedLive = new MutableLiveData<>();
-        initAllCourseList();
+        initCourseList(app);
         this.itemSelected = RecyclerView.NO_POSITION;
         this.itemSelectedLive.setValue(this.itemSelected);
     }
 
-    private void initAllCourseList()
-    {
-      dbCourses = FirebaseDatabase.getInstance().getReference("courses");
-            dbCourses.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot courseSnapshot : dataSnapshot.getChildren()) {
-                        Course course = courseSnapshot.getValue(Course.class);
-                        courseList.add(course);
-                    }
-                    courseLiveData.setValue(courseList);
-                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+    public void initCourseList(Application app){
+        Context context =  app.getApplicationContext();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Set<String> courses = prefs.getStringSet("my_courses", new HashSet<String>());
+        if (!courses.isEmpty()) {
+            for (String course : courses) {
+                String[] courseDetails = course.split(";");
+                Course courseObj = new Course(courseDetails[0], courseDetails[1], 0, Float.parseFloat(courseDetails[2]));
+                courseList.add(courseObj);
+            }
+        }
+            courseLiveData.setValue(courseList);
+        }
 
-                }
-            });
-    }
     public MutableLiveData<ArrayList<Course>> getCourseLiveData() {
         return this.courseLiveData;
     }

@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/fragmentContainerView"
-        class="com.example.ex7.FragA"
+        class="com.example.ex7.MyGradesFrag"
         android:layout_width="217dp"
         android:layout_height="334dp"
         android:layout_marginTop="25dp"
