@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GradesProjectFinal</string>
+    <string name="add_grade_btn">Add grade</string>
+    <string name="grade_hint">Enter your grade</string>
 </resources>

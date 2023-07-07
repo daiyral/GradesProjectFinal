@@ -4,34 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_700"
     >
 
     <TextView
         android:id="@+id/courseName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView 1"
+        android:gravity="center"
+        android:text="Course Name"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.035"
-        tools:layout_editor_absoluteX="-53dp" />
+        app:layout_constraintVertical_bias="0.099"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/courseDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView 2"
+        android:gravity="center"
+        android:text="Details"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.144"
+        app:layout_constraintVertical_bias="0.164"
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
         android:id="@+id/gradeInput"
         android:layout_width="match_parent"
+        android:gravity="center"
         android:layout_height="wrap_content"
-        android:hint="Enter text"
+        android:hint="@string/grade_hint"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,13 +44,13 @@
 
     <Button
         android:id="@+id/addGradeButton"
-        android:onClick="addGradeClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:onClick="addGradeClick"
+        android:text="@string/add_grade_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.499" />
