@@ -15,81 +15,82 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import CountryParser.Country;
-
-public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHolder> {
+public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
     private final Context context;
-    private final CountriesModel viewModel;
-    private ArrayList<Country> countryList;
+    private final CoursesModel viewModel;
+    private ArrayList<Course> courseList = new ArrayList<>();
+
     private FragA.FragAListener listener;
     private int selectedPosition = RecyclerView.NO_POSITION;
     private boolean isSelected;
 
-    public CountryAdapter(Context context, FragmentActivity activity, CountriesModel viewModel, FragA.FragAListener listener) {
+    public CourseAdapter(Context context, FragmentActivity activity, CoursesModel viewModel, FragA.FragAListener listener) {
         this.viewModel = viewModel;
         this.context = context;
         this.listener = listener;
-
-        viewModel.getCountryLiveData().observe(activity, new Observer<ArrayList<Country>>() {
+        viewModel.getCourseLiveData().observe(activity, new Observer<ArrayList<Course>>() {
             @Override
-            public void onChanged(ArrayList<Country> countries) {
-                setCountryList(countries);
+            public void onChanged(ArrayList<Course> courses) {
+                setCoursesList(courses);
             }
         });
     }
 
     @NonNull
     @Override
-    public CountryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CourseAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View countryView = inflater.inflate(R.layout.country_row, parent, false);
-        return new ViewHolder(countryView);
+        View courseView = inflater.inflate(R.layout.course_row, parent, false);
+        return new ViewHolder(courseView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CountryAdapter.ViewHolder holder, int position) {
-        Country country = countryList.get(position);
+    public void onBindViewHolder(@NonNull CourseAdapter.ViewHolder holder, int position) {
+        Course course = courseList.get(position);
         this.selectedPosition = this.viewModel.getPosition();
         if (this.selectedPosition == position)
             holder.itemView.setBackgroundResource(R.color.white);
         else
             holder.itemView.setBackgroundResource(R.color.transparent);
-        holder.setCountry(position, country);
+        holder.setCourse(position, course);
     }
 
     @Override
     public int getItemCount() {
-        return countryList.size();
+        return courseList.size();
     }
 
-    public void setCountryList(ArrayList<Country> countryList){
-        this.countryList = countryList;
+    public void setCoursesList(ArrayList<Course> coursesList){
+        this.courseList = coursesList;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView countryName;
-        private final TextView population;
-        private final ImageView countryFlag;
+        private final TextView courseName;
+        private final TextView description;
+        private final TextView creditPoints;
+        //private final TextView grade;
         private final View view;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            countryName = (TextView) itemView.findViewById(R.id.country);
-            population = (TextView) itemView.findViewById(R.id.population);
-            countryFlag = (ImageView) itemView.findViewById(R.id.flag);
+            courseName = (TextView) itemView.findViewById(R.id.course);
+            description = (TextView) itemView.findViewById(R.id.description);
+            creditPoints = (TextView) itemView.findViewById(R.id.creditPoints);
+            //grade = (TextView) itemView.findViewById(R.id.grade);
             this.view = itemView;
         }
 
-        public void setCountry(int position, Country country){
-            this.countryFlag.setImageResource(searchCountryFlag(country.getFlag()));
-            this.countryName.setText(country.getName());
-            this.population.setText(country.getShorty());
+        public void setCourse(int position, Course course){
+            this.courseName.setText(course.getName());
+            this.description.setText(course.getDescription());
+            this.creditPoints.setText(Float.toString(course.getCredit()));
+            //this.grade.setText(Float.toString(course.getGrade()));
             this.view.setOnLongClickListener(new View.OnLongClickListener() {
                 private final int pos = position;
                 @Override
                 public boolean onLongClick(View view) {
-                    viewModel.removeCountry(position);
+                    viewModel.removeCourse(position);
                     if (position == selectedPosition)
                         viewModel.setItemSelected(RecyclerView.NO_POSITION);
                     else if (position < selectedPosition)
@@ -102,15 +103,10 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHold
                 @Override
                 public void onClick(View view) {
                     viewModel.setItemSelected(position);
-                    listener.OnClickCountry();
+                    //listener.onCourseClick();
                     notifyDataSetChanged();
                 }
             });
-        }
-
-        private int searchCountryFlag(String countryFlag) {
-            Resources resources = context.getResources();
-            return resources.getIdentifier(countryFlag, "drawable", context.getPackageName());
         }
     }
 }

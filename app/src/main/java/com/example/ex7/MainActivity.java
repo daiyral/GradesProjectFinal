@@ -5,22 +5,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import CountryParser.Country;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity implements FragA.FragAListener {
 
+    DatabaseReference dbCourses;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbCourses = FirebaseDatabase.getInstance().getReference();
         setContentView(R.layout.activity_main);
         FragB fragB = (FragB) getSupportFragmentManager().findFragmentByTag("FRAGB");
-
         if ((getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)){
             if (fragB != null) {
                 getSupportFragmentManager().beginTransaction()
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements FragA.FragAListen
     }
 
     @Override
-    public void OnClickCountry(){
+    public void OnClickCourse(){
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
         {
             getSupportFragmentManager().beginTransaction()
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements FragA.FragAListen
     @Override
     protected void onPause() {
         super.onPause();
-        CountriesModel viewModel = new ViewModelProvider(this).get(CountriesModel.class);
-        viewModel.setSPCountries(this);
+        CoursesModel viewModel = new ViewModelProvider(this).get(CoursesModel.class);
+        //viewModel.setSPCountries(this);
     }
 }

@@ -11,16 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import CountryParser.Country;
 
 public class FragB extends Fragment {
-    private CountriesModel viewModel;
-    private Country position = null;
+    private CoursesModel viewModel;
+    private Course position = null;
 
 
     @Override
@@ -31,31 +28,31 @@ public class FragB extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.country_detail_frag, container,false);
+        return inflater.inflate(R.layout.course_detail_frag, container,false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView countryDetails = view.findViewById(R.id.detail_text);
-        viewModel = new ViewModelProvider(requireActivity()).get(CountriesModel.class);
-        viewModel.getCountryLiveData().observe(getActivity(), new Observer<ArrayList<Country>>() {
+        TextView courseDetails = view.findViewById(R.id.detail_text);
+        viewModel = new ViewModelProvider(requireActivity()).get(CoursesModel.class);
+        viewModel.getCourseLiveData().observe(getActivity(), new Observer<ArrayList<Course>>() {
             @Override
-            public void onChanged(ArrayList<Country> countries) {
+            public void onChanged(ArrayList<Course> courses) {
 
-                if (position != null && !countries.contains(position))
-                    countryDetails.setText("");
+                if (position != null && !courses.contains(position))
+                    courseDetails.setText("");
             }
         });
         viewModel.getItemSelected().observe(getActivity(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 if (integer >= 0){
-                    position = viewModel.getCountry(integer);
+                    position = viewModel.getCourse(integer);
                     if (position != null)
-                        countryDetails.setText(position.getDetails());
+                        courseDetails.setText(position.getDescription());
                     else
-                        countryDetails.setText("");
+                        courseDetails.setText("");
                 }
             }
         });

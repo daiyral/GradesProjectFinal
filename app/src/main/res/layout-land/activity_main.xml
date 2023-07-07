@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:layout="@layout/country_frag" />
+        tools:layout="@layout/course_frag" />
 
     <fragment
         android:id="@+id/fragmentDetailContainerView"
@@ -33,5 +33,5 @@
         android:tag="FRAGB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/country_detail_frag" />
+        tools:layout="@layout/course_detail_frag" />
 </androidx.constraintlayout.widget.ConstraintLayout>
