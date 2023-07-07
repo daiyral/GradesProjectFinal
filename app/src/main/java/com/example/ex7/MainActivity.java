@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
             args.putFloat("credit", course.getCredit());
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
-                    .add(R.id.fragContainer, SelectSpecificCourseFrag.class, args,"FRAGB")
+                    .replace(R.id.fragContainer, SelectSpecificCourseFrag.class, args,"FRAGB")
                     .addToBackStack("BBB")
                     .commit();
             getSupportFragmentManager().executePendingTransactions();
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
             args.putFloat("credit", course.getCredit());
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
-                    .add(R.id.fragContainer, SelectSpecificCourseFrag.class, args,"FRAGB")
+                    .replace(R.id.fragContainer, SelectSpecificCourseFrag.class, args,"FRAGB")
                     .addToBackStack("BBB")
                     .commit();
             getSupportFragmentManager().executePendingTransactions();
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
-                .add(R.id.fragContainer, AllCoursesFrag.class, null,"allCoursesFrag")
+                .replace(R.id.fragContainer, AllCoursesFrag.class, null,"allCoursesFrag")
                 .addToBackStack("BBB")
                 .commit();
     }
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
-                .add(android.R.id.content, new MyPreferences(), "prefFrag")
+                .replace(android.R.id.content, new MyPreferences(), "prefFrag")
                 .addToBackStack("BBB")
                 .commit();
     }
