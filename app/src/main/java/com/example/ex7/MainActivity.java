@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle("MD Grades");
         setContentView(R.layout.activity_main);
         SelectSpecificCourseFrag fragB = (SelectSpecificCourseFrag) getSupportFragmentManager().findFragmentByTag("FRAGB");
         if ((getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)){

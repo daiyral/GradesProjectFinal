@@ -37,7 +37,7 @@ public class CoursesModel extends AndroidViewModel {
     private void initAllCourseList()
     {
       dbCourses = FirebaseDatabase.getInstance().getReference("courses");
-            dbCourses.addValueEventListener(new ValueEventListener() {
+      dbCourses.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot courseSnapshot : dataSnapshot.getChildren()) {

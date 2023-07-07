@@ -2,4 +2,5 @@
     <string name="app_name">GradesProjectFinal</string>
     <string name="add_grade_btn">Add grade</string>
     <string name="grade_hint">Enter your grade</string>
+    <string name="no_data_available">Please select a course with the + Icon</string>
 </resources>
