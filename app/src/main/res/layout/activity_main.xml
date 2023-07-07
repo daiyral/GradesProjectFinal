@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/fragmentContainerView"
-        class="com.example.ex7.FragA"
+        class="com.example.ex7.AllCoursesFrag"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"

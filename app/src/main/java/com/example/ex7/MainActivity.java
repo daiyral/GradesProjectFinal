@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends AppCompatActivity implements FragA.FragAListener {
+public class MainActivity extends AppCompatActivity implements AllCoursesFrag.AllCoursesFragListener {
 
     DatabaseReference dbCourses;
     @Override
@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements FragA.FragAListen
         super.onCreate(savedInstanceState);
         dbCourses = FirebaseDatabase.getInstance().getReference();
         setContentView(R.layout.activity_main);
-        FragB fragB = (FragB) getSupportFragmentManager().findFragmentByTag("FRAGB");
+        SelectSpecificCourseFrag fragB = (SelectSpecificCourseFrag) getSupportFragmentManager().findFragmentByTag("FRAGB");
         if ((getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)){
             if (fragB != null) {
                 getSupportFragmentManager().beginTransaction()
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements FragA.FragAListen
             }
             else {
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragmentDetailContainerView, FragB.class,null, "FRAGB")
+                        .add(R.id.fragmentDetailContainerView, SelectSpecificCourseFrag.class,null, "FRAGB")
                         .commit();
             }
             getSupportFragmentManager().executePendingTransactions();
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements FragA.FragAListen
         {
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
-                    .add(R.id.fragContainer, FragB.class, null,"FRAGB")
+                    .add(R.id.fragContainer, SelectSpecificCourseFrag.class, null,"FRAGB")
                     .addToBackStack("BBB")
                     .commit();
             getSupportFragmentManager().executePendingTransactions();

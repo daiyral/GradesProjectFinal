@@ -16,14 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class FragA extends Fragment{
-	private FragAListener listener;
+public class AllCoursesFrag extends Fragment{
+	private AllCoursesFragListener listener;
 	private CoursesModel viewModel;
 
 	@Override
 	public void onAttach(@NonNull Context context) {
 		try{
-			this.listener = (FragAListener)context;
+			this.listener = (AllCoursesFragListener)context;
 		}catch(ClassCastException e){
 			throw new ClassCastException("the class " +
 					context.getClass().getName() +
@@ -48,7 +48,7 @@ public class FragA extends Fragment{
 		rvCourses.setLayoutManager(new LinearLayoutManager(view.getContext()));
 	}
 
-	public interface FragAListener{
+	public interface AllCoursesFragListener{
 		void OnClickCourse();
 	}
 

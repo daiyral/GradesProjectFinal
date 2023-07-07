@@ -20,11 +20,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     private final CoursesModel viewModel;
     private ArrayList<Course> courseList = new ArrayList<>();
 
-    private FragA.FragAListener listener;
+    private AllCoursesFrag.AllCoursesFragListener listener;
     private int selectedPosition = RecyclerView.NO_POSITION;
     private boolean isSelected;
 
-    public CourseAdapter(Context context, FragmentActivity activity, CoursesModel viewModel, FragA.FragAListener listener) {
+    public CourseAdapter(Context context, FragmentActivity activity, CoursesModel viewModel, AllCoursesFrag.AllCoursesFragListener listener) {
         this.viewModel = viewModel;
         this.context = context;
         this.listener = listener;
@@ -63,6 +63,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     public void setCoursesList(ArrayList<Course> coursesList){
         this.courseList = coursesList;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

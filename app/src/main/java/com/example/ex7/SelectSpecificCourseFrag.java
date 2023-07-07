@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.ArrayList;
 
 
-public class FragB extends Fragment {
+public class SelectSpecificCourseFrag extends Fragment {
     private CoursesModel viewModel;
     private Course position = null;
 

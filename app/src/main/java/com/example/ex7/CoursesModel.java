@@ -35,6 +35,7 @@ public class CoursesModel extends AndroidViewModel {
     }
 
     public void initCourseList(Application app){
+        courseLiveData.setValue(courseList);
         Context context =  app.getApplicationContext();
         dbCourses = FirebaseDatabase.getInstance().getReference("courses");
         dbCourses.addValueEventListener(new ValueEventListener() {
