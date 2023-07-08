@@ -49,6 +49,8 @@ public class MyGradesFrag extends Fragment {
         rvCourses.setAdapter(adapter);
         rvCourses.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
+
+
     public GradeAdapter getAdapter(){
         return this.adapter;
     }

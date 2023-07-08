@@ -45,6 +45,7 @@ public class ReadGradeBySMS extends BroadcastReceiver {
                     String[] splitSMS = contentSMS.split("information center")[1].split("on");
                     String courseName = splitSMS[1];
                     String courseGrade = splitSMS[0];
+                    //TODO: crash on wrong split
                     getCourseFromFireBase(context, courseName, Float.parseFloat(courseGrade));
 
 

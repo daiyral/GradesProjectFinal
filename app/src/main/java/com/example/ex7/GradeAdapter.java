@@ -44,7 +44,6 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder>{
         this.context = context;
         this.listener = listener;
 
-
         viewModel.getCourseLiveData().observe(activity, new Observer<ArrayList<Course>>() {
             @Override
             public void onChanged(ArrayList<Course> courses) {
@@ -53,6 +52,7 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder>{
             }
         });
     }
+
 
     @NonNull
     @Override
@@ -63,6 +63,7 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder>{
         return new ViewHolder(courseView);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull GradeAdapter.ViewHolder holder, int position) {
         Course course = courseList.get(position);
@@ -71,8 +72,10 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder>{
             holder.itemView.setBackgroundResource(R.color.white);
         else
             holder.itemView.setBackgroundResource(R.color.transparent);
+
         holder.setCourse(position, course);
     }
+
 
     @Override
     public int getItemCount() {
@@ -85,27 +88,28 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder>{
     }
 
     public void updateAvg(Context context){
-
-        float totalGradeCreditSum=0;
-        float totalCreditSum=0;
-        float gradeCredit=0;
+        float totalGradeCreditSum = 0;
+        float totalCreditSum = 0;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         Set<String> courses = prefs.getStringSet("my_courses", new HashSet<String>());
+
         if (!courses.isEmpty()) {
             for (String course : courses) {
                 String[] courseDetails = course.split(";");
-                totalCreditSum += Float.parseFloat(courseDetails[2]);
-                gradeCredit += Float.parseFloat(courseDetails[2]) * Float.parseFloat(courseDetails[3]);
-                totalGradeCreditSum += gradeCredit;
+                float credit = Float.parseFloat(courseDetails[2]);
+                float grade = Float.parseFloat(courseDetails[3]);
+                totalCreditSum += credit;
+                totalGradeCreditSum += credit * grade;
             }
             this.gradeAvg = totalGradeCreditSum / totalCreditSum;
-            this.totalCredits= totalCreditSum;
+            this.totalCredits = totalCreditSum;
         }
         TextView avgView = ((FragmentActivity) context).findViewById(R.id.gradeAvgView);
-        avgView.setText(String.format("%.2f", gradeAvg));
         TextView creditsView = ((FragmentActivity) context).findViewById(R.id.creditSum);
-        creditsView.setText(String.format("%.2f", totalCredits));
-
+        if (this.gradeAvg != 0 && this.totalCredits != 0) {
+            avgView.setText(String.format("Your average: %.2f", this.gradeAvg));
+            creditsView.setText(String.format("Your credits: %.2f", this.totalCredits));
+        }
     }
 
 
@@ -141,18 +145,10 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder>{
                 @Override
                 public boolean onLongClick(View view) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                    builder.setTitle("Alert")
+                    builder.setTitle("Delete course")
                             .setMessage("Are you sure you want to delete this course?")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    Course course = courseList.get(pos);
-                                    viewModel.removeCourse(position);
-
-                                    if (position == selectedPosition)
-                                        viewModel.setItemSelected(RecyclerView.NO_POSITION);
-                                    else if (position < selectedPosition)
-                                        viewModel.setItemSelected(selectedPosition - 1);
-                                    notifyDataSetChanged();
                                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     Set<String> myCourses = sharedPreferences.getStringSet("my_courses", new HashSet<String>());
@@ -167,6 +163,14 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder>{
                                     }
                                     editor.putStringSet("my_courses", newCourseSet);
                                     editor.apply();
+                                    Course course = courseList.get(pos);
+                                    viewModel.removeCourse(position);
+
+                                    if (position == selectedPosition)
+                                        viewModel.setItemSelected(RecyclerView.NO_POSITION);
+                                    else if (position < selectedPosition)
+                                        viewModel.setItemSelected(selectedPosition - 1);
+                                    notifyDataSetChanged();
                                 }
                             })
                             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

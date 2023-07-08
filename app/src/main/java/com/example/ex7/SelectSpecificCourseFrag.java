@@ -17,6 +17,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.text.TextWatcher;
+import android.widget.Toast;
+import android.view.inputmethod.InputMethodManager;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -79,11 +82,22 @@ public class SelectSpecificCourseFrag extends Fragment {
             }
 
             public void afterTextChanged(android.text.Editable s) {
-                if (s.length() > 0) {
-                    float grade = Float.parseFloat(s.toString());
-                    if (grade >= 0 && grade <= 100) {
-                        courseGrade = grade;
+                if (s.length() > 0)  {
+                    try {
+                        float grade = Float.parseFloat(s.toString());
+                        if (grade >= 0 && grade <= 100) {
+                            courseGrade = grade;
+                        }
+                        else{
+                            courseGrade = null;
+                            Toast.makeText(getActivity(), "Please add grade between 0 and 100", Toast.LENGTH_SHORT).show();
+                        }
+                    }catch(NumberFormatException e){
+                        courseGrade = null;
+                        Toast.makeText(getActivity(), "Please input numbers only", Toast.LENGTH_SHORT).show();
                     }
+
+
                 }
             }
         });
@@ -101,6 +115,9 @@ public class SelectSpecificCourseFrag extends Fragment {
         void removeCourseFromMyGradeList(int idx);
     }
     public void addGradeClick(View view) {
+        if(courseGrade == null){
+            return;
+        }
         int i=0;
         Context context = getContext();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -122,9 +139,12 @@ public class SelectSpecificCourseFrag extends Fragment {
         newCourseSet.add(newCourse);
         editor.putStringSet("my_courses", newCourseSet);
         editor.apply();
-
         this.listener.updateMyGradeList(new_course);
         getActivity().getSupportFragmentManager().popBackStack();
         getActivity().getSupportFragmentManager().popBackStack();
+        // Hide the keyboard
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
     }
 }

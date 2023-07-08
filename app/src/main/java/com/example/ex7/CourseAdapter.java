@@ -32,7 +32,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         this.viewModel = viewModel;
         this.context = context;
         this.listener = listener;
-
         viewModel.getCourseLiveData().observe(activity, new Observer<ArrayList<Course>>() {
             @Override
             public void onChanged(ArrayList<Course> courses) {
@@ -60,6 +59,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         else
             holder.itemView.setBackgroundResource(R.color.transparent);
         holder.setCourse(position, course);
+
     }
 
     @Override
