@@ -29,6 +29,9 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder>{
     private final GradesModel viewModel;
     private ArrayList<Course> courseList = new ArrayList<>();
 
+    private float gradeAvg=0;
+    private float totalCredits=0;
+
     private MyGradesFrag.myGradesFragListener listener;
     private int selectedPosition = RecyclerView.NO_POSITION;
     private boolean isSelected;
@@ -40,10 +43,13 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder>{
         this.viewModel = viewModel;
         this.context = context;
         this.listener = listener;
+
+
         viewModel.getCourseLiveData().observe(activity, new Observer<ArrayList<Course>>() {
             @Override
             public void onChanged(ArrayList<Course> courses) {
                 setCoursesList(courses);
+                updateAvg(context);
             }
         });
     }
@@ -76,6 +82,30 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder>{
     public void setCoursesList(ArrayList<Course> coursesList){
         this.courseList = coursesList;
         notifyDataSetChanged();
+    }
+
+    public void updateAvg(Context context){
+
+        float totalGradeCreditSum=0;
+        float totalCreditSum=0;
+        float gradeCredit=0;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Set<String> courses = prefs.getStringSet("my_courses", new HashSet<String>());
+        if (!courses.isEmpty()) {
+            for (String course : courses) {
+                String[] courseDetails = course.split(";");
+                totalCreditSum += Float.parseFloat(courseDetails[2]);
+                gradeCredit += Float.parseFloat(courseDetails[2]) * Float.parseFloat(courseDetails[3]);
+                totalGradeCreditSum += gradeCredit;
+            }
+            this.gradeAvg = totalGradeCreditSum / totalCreditSum;
+            this.totalCredits= totalCreditSum;
+        }
+        TextView avgView = ((FragmentActivity) context).findViewById(R.id.gradeAvgView);
+        avgView.setText(String.format("%.2f", gradeAvg));
+        TextView creditsView = ((FragmentActivity) context).findViewById(R.id.creditSum);
+        creditsView.setText(String.format("%.2f", totalCredits));
+
     }
 
 
