@@ -16,9 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class MyGradesFrag extends Fragment{
+public class MyGradesFrag extends Fragment {
     private myGradesFragListener listener;
     private GradesModel viewModel;
+    
+    public GradeAdapter adapter;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -43,11 +45,13 @@ public class MyGradesFrag extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         RecyclerView rvCourses = (RecyclerView) view.findViewById(R.id.courseRecycler);
         viewModel = new ViewModelProvider(requireActivity()).get(GradesModel.class);
-        GradeAdapter adapter = new GradeAdapter(view.getContext(), getActivity(), viewModel, this.listener);
+        adapter = new GradeAdapter(view.getContext(), getActivity(), viewModel, this.listener);
         rvCourses.setAdapter(adapter);
         rvCourses.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
-
+    public GradeAdapter getAdapter(){
+        return this.adapter;
+    }
     public interface myGradesFragListener{
         void viewGradeInformation(Course course);
     }

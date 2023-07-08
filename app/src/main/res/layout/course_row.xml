@@ -12,7 +12,7 @@
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="114dp"
         android:layout_weight="0">
 
         <TextView
@@ -22,11 +22,12 @@
             android:layout_weight="0.2"
             android:gravity="center"
             android:text="TextView" />
+
         <View
             android:layout_width="1dp"
             android:layout_height="fill_parent"
-            android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@color/gray" />
 
         <LinearLayout
@@ -37,9 +38,9 @@
 
             <TextView
                 android:id="@+id/description"
-                android:layout_marginLeft="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:fontFamily="@font/aldrich"
                 android:text="TextView"
                 android:textColor="#000000"
@@ -47,19 +48,19 @@
 
             <TextView
                 android:id="@+id/creditPoints"
-                android:layout_marginLeft="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:text="TextView"
                 android:textColor="#DDCECE" />
 
             <TextView
                 android:id="@+id/grade"
-                android:layout_marginLeft="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
                 android:text=""
                 android:textColor="#696969" />
 

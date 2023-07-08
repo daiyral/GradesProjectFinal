@@ -78,28 +78,19 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             courseName = (TextView) itemView.findViewById(R.id.course);
             description = (TextView) itemView.findViewById(R.id.description);
             creditPoints = (TextView) itemView.findViewById(R.id.creditPoints);
-            //grade = (TextView) itemView.findViewById(R.id.grade);
             this.view = itemView;
         }
 
         public void setCourse(int position, Course course){
             this.courseName.setText(course.getName());
-            this.description.setText(course.getDescription());
             this.creditPoints.setText(Float.toString(course.getCredit()));
-            //this.grade.setText(Float.toString(course.getGrade()));
-            this.view.setOnLongClickListener(new View.OnLongClickListener() {
-                private final int pos = position;
-                @Override
-                public boolean onLongClick(View view) {
-                    viewModel.removeCourse(position);
-                    if (position == selectedPosition)
-                        viewModel.setItemSelected(RecyclerView.NO_POSITION);
-                    else if (position < selectedPosition)
-                        viewModel.setItemSelected(selectedPosition - 1);
-                    notifyDataSetChanged();
-                    return true;
-                }
-            });
+            if (course.getDescription().length() > 40) {
+                this.description.setText(course.getDescription().substring(0, 90) + "...");
+            }
+            else {
+                this.description.setText(course.getDescription());
+            }
+            
             this.view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

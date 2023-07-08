@@ -2,19 +2,30 @@ package com.example.ex7;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGradesFragListener, AllCoursesFrag.AllCoursesFragListener {
-
+public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGradesFragListener, AllCoursesFrag.AllCoursesFragListener, SelectSpecificCourseFrag.SelectSpecificCourseFragListener {
+    private final int READ_SMS_CODE = 1;
+    private final int RECEIVE_SMS_CODE = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkPermissions(Manifest.permission.RECEIVE_SMS,RECEIVE_SMS_CODE, "granted RECEIVE_SMS permission");
         getSupportActionBar().setTitle("MD Grades");
         setContentView(R.layout.activity_main);
         SelectSpecificCourseFrag fragB = (SelectSpecificCourseFrag) getSupportFragmentManager().findFragmentByTag("FRAGB");
@@ -30,6 +41,13 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
                         .commit();
             }
             getSupportFragmentManager().executePendingTransactions();
+        }
+    }
+    private void checkPermissions(String permission, int requestCode, String toastTest){
+        if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED){
+            ActivityCompat.requestPermissions(this, new String[] { permission }, requestCode);
+        } else {
+
         }
     }
 
@@ -56,8 +74,6 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         return super.onOptionsItemSelected(item);
     }
 
-
-
     @Override
     public void clickCourseToAddGrade(Course course){
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
@@ -69,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
             args.putFloat("credit", course.getCredit());
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
-                    .replace(R.id.fragContainer, SelectSpecificCourseFrag.class, args,"FRAGB")
-                    .addToBackStack("BBB")
+                    .add(R.id.fragContainer, SelectSpecificCourseFrag.class, args,"FRAGB")
+                    .addToBackStack("DDD")
                     .commit();
             getSupportFragmentManager().executePendingTransactions();
         }
@@ -87,8 +103,8 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
             args.putFloat("credit", course.getCredit());
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
-                    .replace(R.id.fragContainer, SelectSpecificCourseFrag.class, args,"FRAGB")
-                    .addToBackStack("BBB")
+                    .add(R.id.fragContainer, SelectSpecificCourseFrag.class, args,"FRAGB")
+                    .addToBackStack("AAA")
                     .commit();
             getSupportFragmentManager().executePendingTransactions();
         }
@@ -98,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
-                .replace(R.id.fragContainer, AllCoursesFrag.class, null,"allCoursesFrag")
+                .add(R.id.fragContainer, AllCoursesFrag.class, null,"allCoursesFrag")
                 .addToBackStack("BBB")
                 .commit();
     }
@@ -107,8 +123,8 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
-                .replace(android.R.id.content, new MyPreferences(), "prefFrag")
-                .addToBackStack("BBB")
+                .add(android.R.id.content, new MyPreferences(), "prefFrag")
+                .addToBackStack("CCC")
                 .commit();
     }
     
@@ -119,4 +135,18 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         CoursesModel viewModel = new ViewModelProvider(this).get(CoursesModel.class);
         //viewModel.setSPCountries(this);
     }
+
+
+    @Override
+    public void updateMyGradeList(Course course) {
+        GradesModel viewModel = new ViewModelProvider(this).get(GradesModel.class);
+        viewModel.addCourse(course);
+    }
+
+    @Override
+    public void removeCourseFromMyGradeList(int idx) {
+        GradesModel viewModel = new ViewModelProvider(this).get(GradesModel.class);
+        viewModel.removeCourse(idx);
+    }
+
 }

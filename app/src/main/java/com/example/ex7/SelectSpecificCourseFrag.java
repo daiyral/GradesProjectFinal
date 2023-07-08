@@ -24,14 +24,22 @@ import java.util.stream.Collectors;
 
 
 public class SelectSpecificCourseFrag extends Fragment {
-    private CoursesModel viewModel;
-    private Course position = null;
+    private SelectSpecificCourseFragListener listener;
     private String courseName = null;
     private String courseDescription = null;
     private Float courseGrade = null;
 
+    private Float courseCredit = null;
+
     @Override
     public void onAttach(@NonNull Context context) {
+        try{
+            this.listener = (SelectSpecificCourseFragListener)context;
+        }catch(ClassCastException e){
+            throw new ClassCastException("the class " +
+                    context.getClass().getName() +
+                    " must implements the interface 'SelectSpecificCourseFragListener'");
+        }
         super.onAttach(context);
     }
 
@@ -48,6 +56,11 @@ public class SelectSpecificCourseFrag extends Fragment {
             this.courseDescription = args.getString("description");
             this.courseName = args.getString("name");
             this.courseGrade = args.getFloat("grade");
+            this.courseCredit = args.getFloat("credit");
+            if (this.courseGrade != 0.0) {
+                EditText gradeInput = view.findViewById(R.id.gradeInput);
+                gradeInput.setText(this.courseGrade.toString());
+            }
             TextView courseName = view.findViewById(R.id.courseName);
             TextView courseDescription = view.findViewById(R.id.courseDescription);
             courseName.setText(this.courseName);
@@ -83,18 +96,35 @@ public class SelectSpecificCourseFrag extends Fragment {
         });
         super.onViewCreated(view, savedInstanceState);
     }
-
+    public interface SelectSpecificCourseFragListener {
+        void updateMyGradeList(Course course);
+        void removeCourseFromMyGradeList(int idx);
+    }
     public void addGradeClick(View view) {
+        int i=0;
         Context context = getContext();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        Course new_course = new Course(courseName, courseDescription, courseCredit, courseGrade);
         Set<String> myCourses = sharedPreferences.getStringSet("my_courses", new HashSet<String>());
-        String newCourse = courseName + ";" + courseDescription + ";" + courseGrade  ;
-        myCourses.add(newCourse);
-        editor.putStringSet("my_courses", myCourses);
+        for (String course : myCourses) {
+            String[] courseInfo = course.split(";");
+            if (courseInfo[0].equals(courseName)) {
+                myCourses.remove(course);
+                this.listener.removeCourseFromMyGradeList(i);
+                break;
+            }
+            i++;
+        }
+        String newCourse = courseName + ";" + courseDescription + ";" + courseCredit + ";" + courseGrade;
+        Set<String> newCourseSet = new HashSet<String>();
+        newCourseSet.addAll(myCourses);
+        newCourseSet.add(newCourse);
+        editor.putStringSet("my_courses", newCourseSet);
         editor.apply();
-        getActivity().getSupportFragmentManager().popBackStack();
-        getActivity().getSupportFragmentManager().popBackStack();
 
+        this.listener.updateMyGradeList(new_course);
+        getActivity().getSupportFragmentManager().popBackStack();
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 }

@@ -39,7 +39,7 @@ public class GradesModel extends AndroidViewModel {
         if (!courses.isEmpty()) {
             for (String course : courses) {
                 String[] courseDetails = course.split(";");
-                Course courseObj = new Course(courseDetails[0], courseDetails[1], 0, Float.parseFloat(courseDetails[2]));
+                Course courseObj = new Course(courseDetails[0], courseDetails[1], Float.parseFloat(courseDetails[2]), Float.parseFloat(courseDetails[3]));
                 courseList.add(courseObj);
             }
         }
@@ -67,7 +67,10 @@ public class GradesModel extends AndroidViewModel {
         courseList.remove(position);
         courseLiveData.setValue(courseList);
     }
-
+    public void addCourse(Course course){
+        courseList.add(course);
+        courseLiveData.setValue(courseList);
+    }
     public Course getCourse(int position){
         return this.courseList.get(position);
     }
