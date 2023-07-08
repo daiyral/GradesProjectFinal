@@ -1,7 +1,9 @@
 package com.example.ex7;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,8 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
     private final Context context;
@@ -28,6 +32,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         this.viewModel = viewModel;
         this.context = context;
         this.listener = listener;
+
         viewModel.getCourseLiveData().observe(activity, new Observer<ArrayList<Course>>() {
             @Override
             public void onChanged(ArrayList<Course> courses) {
@@ -42,6 +47,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View courseView = inflater.inflate(R.layout.course_row, parent, false);
+
         return new ViewHolder(courseView);
     }
 
@@ -84,8 +90,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         public void setCourse(int position, Course course){
             this.courseName.setText(course.getName());
             this.creditPoints.setText(Float.toString(course.getCredit()));
-            if (course.getDescription().length() > 40) {
-                this.description.setText(course.getDescription().substring(0, 90) + "...");
+            if (course.getDescription().length() > 50) {
+                this.description.setText(course.getDescription().substring(0, 50) + "...");
             }
             else {
                 this.description.setText(course.getDescription());
