@@ -32,8 +32,11 @@ import java.util.concurrent.Executors;
 
 public class ReadGradeBySMS extends BroadcastReceiver {
     Course new_course = null;
+    private SmsListener listener;
 
-
+    public ReadGradeBySMS(SmsListener listener) {
+        this.listener = listener;
+    }
     @Override
         public void onReceive(Context context, Intent intent) {
             SmsMessage[] messages = Telephony.Sms.Intents.getMessagesFromIntent(intent);
@@ -85,6 +88,7 @@ public class ReadGradeBySMS extends BroadcastReceiver {
                     {
                         new_course = new Course(courseName, course.getDescription(), course.getCredit(), courseGrade);
                         addGradeToSP(context, new_course);
+                        listener.addCourseBySms(new_course);
                         break;
 
                     }
@@ -97,7 +101,9 @@ public class ReadGradeBySMS extends BroadcastReceiver {
             }
         });
     }
-
+    public interface SmsListener {
+        public void addCourseBySms(Course course);
+    }
 
 }
 

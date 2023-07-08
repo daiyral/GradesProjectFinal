@@ -1,13 +1,9 @@
 package com.example.ex7;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder>{
+public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> {
     private final Context context;
     private final GradesModel viewModel;
     private ArrayList<Course> courseList = new ArrayList<>();
@@ -32,8 +27,6 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder>{
     private MyGradesFrag.myGradesFragListener listener;
     private int selectedPosition = RecyclerView.NO_POSITION;
     private boolean isSelected;
-
-
 
 
     public GradeAdapter(Context context, FragmentActivity activity, GradesModel viewModel, MyGradesFrag.myGradesFragListener listener) {
@@ -73,7 +66,7 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder>{
         return courseList.size();
     }
 
-    public void setCoursesList(ArrayList<Course> coursesList){
+    public void setCoursesList(ArrayList<Course> coursesList) {
         this.courseList = coursesList;
         notifyDataSetChanged();
     }
@@ -96,18 +89,18 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder>{
             this.view = itemView;
         }
 
-        public void setCourse(int position, Course course){
+        public void setCourse(int position, Course course) {
             this.courseName.setText(course.getName());
             if (course.getDescription().length() > 40) {
                 this.description.setText(course.getDescription().substring(0, 40) + "...");
-            }
-            else {
+            } else {
                 this.description.setText(course.getDescription());
             }
             this.creditPoints.setText(Float.toString(course.getCredit()));
             this.grade.setText(Float.toString(course.getGrade()));
             this.view.setOnLongClickListener(new View.OnLongClickListener() {
                 private final int pos = position;
+
                 @Override
                 public boolean onLongClick(View view) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
@@ -150,14 +143,16 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder>{
                     return true;
                 }
             });
-            this.view.setOnClickListener(new View.OnClickListener() {
+            View.OnClickListener handleClick = new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View arg0) {
                     viewModel.setItemSelected(position);
-                    listener.viewGradeInformation(course);
+                    listener.viewGradeInformation(courseList.get(position));
                     notifyDataSetChanged();
                 }
-            });
+            };
+            this.view.setOnClickListener(handleClick);
+
         }
     }
 }
