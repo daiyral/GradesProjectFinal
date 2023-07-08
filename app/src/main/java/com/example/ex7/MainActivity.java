@@ -3,6 +3,7 @@ package com.example.ex7;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,22 +11,41 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.Notification;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGradesFragListener, AllCoursesFrag.AllCoursesFragListener, SelectSpecificCourseFrag.SelectSpecificCourseFragListener {
+public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGradesFragListener, AllCoursesFrag.AllCoursesFragListener,ReadGradeBySMS.SmsListener, SelectSpecificCourseFrag.SelectSpecificCourseFragListener {
     private final int READ_SMS_CODE = 1;
     private final int RECEIVE_SMS_CODE = 2;
+    private ReadGradeBySMS smsReceiver;
+    private static final String SMS_RECEIVED_ACTION = "android.provider.Telephony.SMS_RECEIVED";
+    private static final int FOREGROUND_PERMISSION_REQUEST_CODE = 100;
+    private static final String FOREGROUND_SERVICE_PERMISSION = "android.permission.FOREGROUND_SERVICE";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkPermissions(Manifest.permission.RECEIVE_SMS,RECEIVE_SMS_CODE, "granted RECEIVE_SMS permission");
+        smsReceiver = new ReadGradeBySMS(this);
+
+        // Create an intent filter for SMS_RECEIVED_ACTION
+        IntentFilter intentFilter = new IntentFilter(SMS_RECEIVED_ACTION);
+        // Register the BroadcastReceiver
+        registerReceiver(smsReceiver, intentFilter);
+        //startService();
         getSupportActionBar().setTitle("MD Grades");
         setContentView(R.layout.activity_main);
         SelectSpecificCourseFrag fragB = (SelectSpecificCourseFrag) getSupportFragmentManager().findFragmentByTag("FRAGB");
@@ -42,6 +62,12 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
             }
             getSupportFragmentManager().executePendingTransactions();
         }
+    }
+
+    public void startService() {
+        Intent serviceIntent = new Intent(this, CourseNotificationService.class);
+        serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
+        ContextCompat.startForegroundService(this, serviceIntent);
     }
     private void checkPermissions(String permission, int requestCode, String toastTest){
         if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED){
@@ -148,5 +174,22 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         GradesModel viewModel = new ViewModelProvider(this).get(GradesModel.class);
         viewModel.removeCourse(idx);
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
+        // Unregister the BroadcastReceiver when the activity is destroyed
+        unregisterReceiver(smsReceiver);
+       // stopService();
+    }
+    public void stopService() {
+        Intent serviceIntent = new Intent(this, CourseNotificationService.class);
+        stopService(serviceIntent);
+    }
+    @Override
+    public void addCourseBySms(Course course) {
+        GradesModel viewModel = new ViewModelProvider(this).get(GradesModel.class);
+        viewModel.addCourse(course);
+//        Toast.makeText(this, "Course added successfully", Toast.LENGTH_SHORT).show();
+    }
 }
