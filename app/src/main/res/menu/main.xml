@@ -15,11 +15,11 @@
 
         <item
             android:id="@+id/action_preference"
-            android:title="Preference" />
+            android:title="@string/preference" />
 
         <item
             android:id="@+id/action_exit"
-            android:title="Exit" />
+            android:title="@string/exit" />
 
     </item>
 

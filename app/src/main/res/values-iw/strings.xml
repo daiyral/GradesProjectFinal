@@ -10,4 +10,8 @@
     <string name="dialog_no">לא</string>
     <string name="app_language_summary">תבחור שפה רצויה</string>
     <string name="app_language">שפה</string>
+    <string name="preference">העדפות</string>
+    <string name="exit">יציאה</string>
+    <string name="english">אנגלית</string>
+    <string name="hebrew">עברית</string>
 </resources>

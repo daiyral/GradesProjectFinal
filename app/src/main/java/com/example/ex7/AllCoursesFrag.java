@@ -5,6 +5,9 @@ package com.example.ex7;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,7 +22,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class AllCoursesFrag extends Fragment{
 	private AllCoursesFragListener listener;
 	private CoursesModel viewModel;
-
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
 	@Override
 	public void onAttach(@NonNull Context context) {
 		try{
@@ -31,7 +38,16 @@ public class AllCoursesFrag extends Fragment{
 		}
 		super.onAttach(context);
 	}
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
 
+		// Get the menu items you want to show/hide
+		MenuItem addCourseMenuItem = menu.findItem(R.id.add_course);
+
+		// Update the visibility of menu items
+		addCourseMenuItem.setVisible(false);
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

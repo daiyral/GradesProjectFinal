@@ -9,4 +9,10 @@
     <string name="dialog_no">No</string>
     <string name="app_language_summary">Select desired language</string>
     <string name="app_language">Language</string>
+    <string name="preference">Preference</string>
+    <string name="exit">Exit</string>
+    <string name="english">English</string>
+    <string name="hebrew">Hebrew</string>
+
+
 </resources>
