@@ -1,19 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
     <item
         android:id="@+id/add_course"
-        android:title="add course"
         android:icon="@drawable/plus_icon"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        android:title="Add Course"
+        android:orderInCategory="100" />
 
     <item
-        android:id="@+id/settings"
-        android:title="preference"
-        android:icon="@drawable/settings_48"
-        app:showAsAction="ifRoom"/>
+        android:id="@+id/action_menu"
+        android:title=""
+        android:orderInCategory="100">
 
+        <item
+            android:id="@+id/action_preference"
+            android:title="Preference" />
+
+        <item
+            android:id="@+id/action_exit"
+            android:title="Exit" />
+
+    </item>
 
 </menu>

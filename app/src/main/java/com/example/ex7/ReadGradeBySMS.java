@@ -37,6 +37,8 @@ public class ReadGradeBySMS extends BroadcastReceiver {
     public ReadGradeBySMS(SmsListener listener) {
         this.listener = listener;
     }
+
+    //MUST RECIEVE SMS WITH structure for example :" Recived new grade from information center 80 on Algebra "
     @Override
         public void onReceive(Context context, Intent intent) {
             SmsMessage[] messages = Telephony.Sms.Intents.getMessagesFromIntent(intent);
@@ -53,21 +55,23 @@ public class ReadGradeBySMS extends BroadcastReceiver {
 
 
                 }
-                Toast.makeText(context, "SMS from: " + senderNumber + "\nMessage: " + contentSMS, Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "SMS from: " + senderNumber + "\nMessage: " + contentSMS, Toast.LENGTH_LONG).show();
             }
         }
 
     public void addGradeToSP(Context context, Course new_course){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
+        int i=0;
         Set<String> myCourses = sharedPreferences.getStringSet("my_courses", new HashSet<String>());
         for (String course : myCourses) {
             String[] courseInfo = course.split(";");
             if (courseInfo[0].equals(new_course.getName())) {
                 myCourses.remove(course);
+                this.listener.removeCourseFromMyGradeList(i);
                 break;
             }
+            i++;
         }
         String newCourse = new_course.getName() + ";" + new_course.getDescription() + ";" + new_course.getCredit() + ";" + new_course.getGrade();
         Set<String> newCourseSet = new HashSet<String>();
@@ -87,7 +91,7 @@ public class ReadGradeBySMS extends BroadcastReceiver {
                     Course course = courseSnapshot.getValue(Course.class);
                     if (course.getName().trim().toLowerCase(Locale.ROOT).equals(courseName.trim().toLowerCase(Locale.ROOT)))
                     {
-                        new_course = new Course(courseName, course.getDescription(), course.getCredit(), courseGrade);
+                        new_course = new Course(courseName.trim(), course.getDescription(), course.getCredit(), courseGrade);
                         addGradeToSP(context, new_course);
                         listener.addCourseBySms(new_course);
                         break;
@@ -104,6 +108,7 @@ public class ReadGradeBySMS extends BroadcastReceiver {
     }
     public interface SmsListener {
         public void addCourseBySms(Course course);
+        public void removeCourseFromMyGradeList(int idx);
     }
 
 }

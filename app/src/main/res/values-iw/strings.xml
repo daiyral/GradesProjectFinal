@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GradesProjectFinal</string>
+    <string name="add_grade_btn">תוסיף ציון</string>
+    <string name="grade_hint">תוסיף את הציון שלך</string>
+    <string name="no_data_available">בבקשה תוסיף ציון</string>
+    <string name="dialog_title">סוגר את האפליקציה</string>
+    <string name="dialog_exit">אתה בטוח שאתה רוצה לצאת?</string>
+    <string name="dialog_yes">כן</string>
+    <string name="dialog_no">לא</string>
+    <string name="app_language_summary">תבחור שפה רצויה</string>
+    <string name="app_language">שפה</string>
+</resources>

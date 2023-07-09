@@ -3,5 +3,10 @@
     <string name="add_grade_btn">Add grade</string>
     <string name="grade_hint">Enter your grade</string>
     <string name="no_data_available">Please add grades</string>
-
+    <string name="dialog_title">Closing the application</string>
+    <string name="dialog_exit">Are you sure you want to exit?</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="app_language_summary">Select desired language</string>
+    <string name="app_language">Language</string>
 </resources>

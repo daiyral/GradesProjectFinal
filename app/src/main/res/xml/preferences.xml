@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="removed_countries"
-        android:title="remember removed countries" />
+
+    <ListPreference
+        android:key="selected_language"
+        android:title="@string/app_language"
+        android:summary="@string/app_language_summary"
+        android:entries="@array/dropdown_options"
+        android:entryValues="@array/dropdown_values"
+        android:defaultValue="en" />
+
 </PreferenceScreen>

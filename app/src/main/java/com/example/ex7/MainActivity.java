@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,18 +13,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGradesFragListener, AllCoursesFrag.AllCoursesFragListener,ReadGradeBySMS.SmsListener, SelectSpecificCourseFrag.SelectSpecificCourseFragListener {
@@ -36,6 +45,27 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
 
 
     @Override
+    protected void attachBaseContext(Context base) {
+        // Load the selected language preference from SharedPreferences
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(base);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String selectedLanguage = sharedPreferences.getString("selected_language", "en");
+
+        Locale locale = new Locale(selectedLanguage);
+
+        // Update the locale
+        Locale newLocale = new Locale(selectedLanguage);
+        Locale.setDefault(newLocale);
+
+        // Apply the new locale configuration
+        Configuration configuration = new Configuration();
+        configuration.setLocale(newLocale);
+        base = base.createConfigurationContext(configuration);
+
+        super.attachBaseContext(base);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkPermissions(Manifest.permission.RECEIVE_SMS,RECEIVE_SMS_CODE, "granted RECEIVE_SMS permission");
@@ -45,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         IntentFilter intentFilter = new IntentFilter(SMS_RECEIVED_ACTION);
         // Register the BroadcastReceiver
         registerReceiver(smsReceiver, intentFilter);
-        //startService();
+        startService();
         getSupportActionBar().setTitle("MD Grades");
         setContentView(R.layout.activity_main);
         SelectSpecificCourseFrag fragB = (SelectSpecificCourseFrag) getSupportFragmentManager().findFragmentByTag("FRAGB");
@@ -69,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
         ContextCompat.startForegroundService(this, serviceIntent);
     }
+
     private void checkPermissions(String permission, int requestCode, String toastTest){
         if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED){
             ActivityCompat.requestPermissions(this, new String[] { permission }, requestCode);
@@ -86,16 +117,20 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        MyPreferences prefFrag = (MyPreferences) getSupportFragmentManager().findFragmentByTag("prefFrag");
-        if (prefFrag != null)
-            return true;
-        if (item.getItemId() == R.id.settings) {
+        int id = item.getItemId();
+        if (id == R.id.action_preference) {
+            // Handle preference menu item click
+            // Open preferences activity or show a dialog
             showPreferences();
             return true;
-        }
-        if(item.getItemId() == R.id.add_course){
-            showAllCourses();
+        } else if (id == R.id.action_exit) {
+            Log.i("menu exit item", "menu exit item");
+            DialogFragment newFragment = DialogFrag.newInstance();
+            newFragment.show(getSupportFragmentManager(),"dialog");
             return true;
+        } else if(item.getItemId() == R.id.add_course){
+           showAllCourses();
+           return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -177,10 +212,9 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         // Unregister the BroadcastReceiver when the activity is destroyed
         unregisterReceiver(smsReceiver);
-       // stopService();
+        stopService();
     }
     public void stopService() {
         Intent serviceIntent = new Intent(this, CourseNotificationService.class);

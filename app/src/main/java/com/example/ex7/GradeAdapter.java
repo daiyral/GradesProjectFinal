@@ -97,12 +97,14 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
             this.gradeAvg = totalGradeCreditSum / totalCreditSum;
             this.totalCredits = totalCreditSum;
         }
+        else{
+            this.gradeAvg=0;
+            this.totalCredits=0;
+        }
         TextView avgView = ((FragmentActivity) context).findViewById(R.id.gradeAvgView);
         TextView creditsView = ((FragmentActivity) context).findViewById(R.id.creditSum);
-        if (this.gradeAvg != 0 && this.totalCredits != 0) {
-            avgView.setText(String.format("Your average: %.2f", this.gradeAvg));
-            creditsView.setText(String.format("Your credits: %.2f", this.totalCredits));
-        }
+        avgView.setText(String.format("Your average: %.2f", this.gradeAvg));
+        creditsView.setText(String.format("Your credits: %.2f", this.totalCredits));
     }
 
 
