@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +20,28 @@ import java.util.prefs.Preferences;
 
 public class MyPreferences extends PreferenceFragmentCompat {
 
-
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = super.onCreateView(inflater, container, savedInstanceState);
         view.setBackgroundColor(getResources().getColor(R.color.white));
         return view;
     }
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
 
+        // Get the menu items you want to show/hide
+        MenuItem addCourseMenuItem = menu.findItem(R.id.add_course);
+        MenuItem pref_item = menu.findItem(R.id.action_preference);
+        // Update the visibility of menu items
+        addCourseMenuItem.setVisible(false);
+        pref_item.setVisible(false);
+    }
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
