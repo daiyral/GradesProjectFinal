@@ -37,7 +37,6 @@ public class ReadGradeBySMS extends BroadcastReceiver {
     public ReadGradeBySMS(SmsListener listener) {
         this.listener = listener;
     }
-
     //MUST RECIEVE SMS WITH structure for example :" Recived new grade from information center 80 on Algebra "
     @Override
         public void onReceive(Context context, Intent intent) {
@@ -47,15 +46,16 @@ public class ReadGradeBySMS extends BroadcastReceiver {
                 String senderNumber = message.getDisplayOriginatingAddress();
                 String contentSMS = message.getDisplayMessageBody();
                 if (senderNumber.equals("braude")){
-                    String[] splitSMS = contentSMS.split("information center")[1].split("on");
-                    String courseName = splitSMS[1];
-                    String courseGrade = splitSMS[0];
-                    //TODO: crash on wrong split
-                    getCourseFromFireBase(context, courseName, Float.parseFloat(courseGrade));
-
-
+                    try {
+                        String[] splitSMS = contentSMS.split("information center")[1].split("on");
+                        String courseName = splitSMS[1];
+                        String courseGrade = splitSMS[0];
+                        getCourseFromFireBase(context, courseName, Float.parseFloat(courseGrade));
+                    }
+                    catch (Exception e){
+//                        Toast.makeText(context, "SMS from: " + senderNumber + "\nMessage: " + contentSMS, Toast.LENGTH_LONG).show();
+                    }
                 }
-                //Toast.makeText(context, "SMS from: " + senderNumber + "\nMessage: " + contentSMS, Toast.LENGTH_LONG).show();
             }
         }
 
