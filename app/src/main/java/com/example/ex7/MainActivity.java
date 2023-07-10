@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         // Register the BroadcastReceiver
         registerReceiver(smsReceiver, intentFilter);
         startService();
-        getSupportActionBar().setTitle("MD Grades");
+        getSupportActionBar().setTitle(R.string.title);
         setContentView(R.layout.activity_main);
         SelectSpecificCourseFrag fragB = (SelectSpecificCourseFrag) getSupportFragmentManager().findFragmentByTag("FRAGB");
         if ((getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)){
