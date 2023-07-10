@@ -67,6 +67,15 @@ public class GradesModel extends AndroidViewModel {
         courseList.remove(position);
         courseLiveData.setValue(courseList);
     }
+    public void removeCourseByName(String courseName){
+        for (Course course : courseList){
+            if(course.getName().equals(courseName)) {
+                courseList.remove(course);
+                break;
+            }
+        }
+        courseLiveData.setValue(courseList);
+    }
     public void addCourse(Course course){
         courseList.add(course);
         courseLiveData.setValue(courseList);

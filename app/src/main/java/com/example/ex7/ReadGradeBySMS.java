@@ -68,7 +68,7 @@ public class ReadGradeBySMS extends BroadcastReceiver {
             String[] courseInfo = course.split(";");
             if (courseInfo[0].equals(new_course.getName())) {
                 myCourses.remove(course);
-                this.listener.removeCourseFromMyGradeList(i);
+                this.listener.removeCourseFromMyGradeList(courseInfo[0]);
                 break;
             }
             i++;
@@ -108,7 +108,7 @@ public class ReadGradeBySMS extends BroadcastReceiver {
     }
     public interface SmsListener {
         public void addCourseBySms(Course course);
-        public void removeCourseFromMyGradeList(int idx);
+        public void removeCourseFromMyGradeList(String courseName);
     }
 
 }

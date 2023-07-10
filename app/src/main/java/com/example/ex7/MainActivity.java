@@ -205,9 +205,9 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
     }
 
     @Override
-    public void removeCourseFromMyGradeList(int idx) {
+    public void removeCourseFromMyGradeList(String courseName) {
         GradesModel viewModel = new ViewModelProvider(this).get(GradesModel.class);
-        viewModel.removeCourse(idx);
+        viewModel.removeCourseByName(courseName);
     }
     @Override
     protected void onDestroy() {

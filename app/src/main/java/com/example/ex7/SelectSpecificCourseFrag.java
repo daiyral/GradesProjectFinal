@@ -129,7 +129,7 @@ public class SelectSpecificCourseFrag extends Fragment {
     }
     public interface SelectSpecificCourseFragListener {
         void updateMyGradeList(Course course);
-        void removeCourseFromMyGradeList(int idx);
+        void removeCourseFromMyGradeList(String courseName);
     }
     public void addGradeClick(View view) {
         if(courseGrade == null){
@@ -145,7 +145,7 @@ public class SelectSpecificCourseFrag extends Fragment {
             String[] courseInfo = course.split(";");
             if (courseInfo[0].equals(courseName)) {
                 myCourses.remove(course);
-                this.listener.removeCourseFromMyGradeList(i);
+                this.listener.removeCourseFromMyGradeList(courseName);
                 break;
             }
             i++;
