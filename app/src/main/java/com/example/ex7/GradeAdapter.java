@@ -28,6 +28,7 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
     private float totalCredits=0;
 
     private MyGradesFrag.myGradesFragListener listener;
+
     private int selectedPosition = RecyclerView.NO_POSITION;
     private boolean isSelected;
 
@@ -56,13 +57,20 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
         return new ViewHolder(courseView);
     }
 
+    public float getGradeAvg() {
+        return gradeAvg;
+    }
+
+    public float getTotalCredits() {
+        return totalCredits;
+    }
 
     @Override
     public void onBindViewHolder(@NonNull GradeAdapter.ViewHolder holder, int position) {
         Course course = courseList.get(position);
         this.selectedPosition = this.viewModel.getPosition();
         if (this.selectedPosition == position)
-            holder.itemView.setBackgroundResource(R.color.white);
+            holder.itemView.setBackgroundResource(R.color.deep_blue);
         else
             holder.itemView.setBackgroundResource(R.color.transparent);
 
@@ -78,8 +86,19 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
     public void setCoursesList(ArrayList<Course> coursesList) {
         this.courseList = coursesList;
         notifyDataSetChanged();
+        updateEmptyView();
     }
-
+    private void updateEmptyView(){
+        TextView empty_list = ((FragmentActivity) context).findViewById(R.id.empty_state_text);
+        RecyclerView recyclerView = ((FragmentActivity) context).findViewById(R.id.courseRecycler);
+        if (getItemCount() == 0) {
+            empty_list.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            empty_list.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+    }
     public void updateAvg(Context context){
         float totalGradeCreditSum = 0;
         float totalCreditSum = 0;
@@ -165,6 +184,16 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
                                         viewModel.setItemSelected(RecyclerView.NO_POSITION);
                                     else if (position < selectedPosition)
                                         viewModel.setItemSelected(selectedPosition - 1);
+                                    if(viewModel.getCourseLiveData().getValue().size()==0){
+                                        listener.viewGradeInformation(null);
+                                    }
+                                    else {
+                                        if (position > viewModel.getCourseLiveData().getValue().size() - 1)
+                                            listener.viewGradeInformation(courseList.get(viewModel.getCourseLiveData().getValue().size() - 1));
+                                        else
+                                            listener.viewGradeInformation(courseList.get(position));
+                                    }
+
                                     notifyDataSetChanged();
                                 }
                             })

@@ -2,6 +2,7 @@ package com.example.ex7;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ public class SelectSpecificCourseFrag extends Fragment {
 
     private Float courseCredit = null;
 
+
     @Override
     public void onAttach(@NonNull Context context) {
         try{
@@ -56,12 +58,13 @@ public class SelectSpecificCourseFrag extends Fragment {
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            // Get the menu items you want to show/hide
+            MenuItem addCourseMenuItem = menu.findItem(R.id.add_course);
 
-        // Get the menu items you want to show/hide
-        MenuItem addCourseMenuItem = menu.findItem(R.id.add_course);
-
-        // Update the visibility of menu items
-        addCourseMenuItem.setVisible(false);
+            // Update the visibility of menu items
+            addCourseMenuItem.setVisible(false);
+        }
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,60 +74,71 @@ public class SelectSpecificCourseFrag extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        TextView courseName = view.findViewById(R.id.courseName);
+        TextView courseDescription = view.findViewById(R.id.courseDescription);
+        EditText gradeInput = view.findViewById(R.id.gradeInput);
+        Button addGradeButton = view.findViewById(R.id.addGradeButton);
         Bundle args = getArguments();
         if (args != null) {
+            courseDescription.setVisibility(View.VISIBLE);
+            gradeInput.setVisibility(View.VISIBLE);
+            addGradeButton.setVisibility(View.VISIBLE);
             this.courseDescription = args.getString("description");
             this.courseName = args.getString("name");
             this.courseGrade = args.getFloat("grade");
             this.courseCredit = args.getFloat("credit");
             if (this.courseGrade != 0.0) {
-                EditText gradeInput = view.findViewById(R.id.gradeInput);
                 gradeInput.setText(this.courseGrade.toString());
             }
-            TextView courseName = view.findViewById(R.id.courseName);
-            TextView courseDescription = view.findViewById(R.id.courseDescription);
             courseName.setText(this.courseName);
             courseDescription.setText(this.courseDescription);
-        }
-        EditText gradeInput = view.findViewById(R.id.gradeInput);
-        gradeInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            public void afterTextChanged(android.text.Editable s) {
-                if (s.length() > 0)  {
-                    try {
-                        float grade = Float.parseFloat(s.toString());
-                        if (grade >= 0 && grade <= 100) {
-                            courseGrade = grade;
-                        }
-                        else{
-                            courseGrade = null;
-                            Toast.makeText(getActivity(), "Please add grade between 0 and 100", Toast.LENGTH_SHORT).show();
-                        }
-                    }catch(NumberFormatException e){
-                        courseGrade = null;
-                        Toast.makeText(getActivity(), "Please input numbers only", Toast.LENGTH_SHORT).show();
-                    }
-
+            gradeInput.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
                 }
-            }
-        });
-        Button addGradeButton = view.findViewById(R.id.addGradeButton);
-        addGradeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addGradeClick(v);
-            }
-        });
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                public void afterTextChanged(android.text.Editable s) {
+                    if (s.length() > 0)  {
+                        try {
+                            float grade = Float.parseFloat(s.toString());
+                            if (grade >= 0 && grade <= 100) {
+                                courseGrade = grade;
+                            }
+                            else{
+                                courseGrade = null;
+                                Toast.makeText(getActivity(), "Please add grade between 0 and 100", Toast.LENGTH_SHORT).show();
+                            }
+                        }catch(NumberFormatException e){
+                            courseGrade = null;
+                            Toast.makeText(getActivity(), "Please input numbers only", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                }
+            });
+
+            addGradeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addGradeClick(v);
+                }
+            });
+        }
+        else{
+            courseDescription.setVisibility(View.GONE);
+            gradeInput.setVisibility(View.GONE);
+            addGradeButton.setVisibility(View.GONE);
+            courseName.setText("Please Select Course");
+        }
+
+
         super.onViewCreated(view, savedInstanceState);
     }
     public interface SelectSpecificCourseFragListener {

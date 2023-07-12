@@ -8,22 +8,9 @@
     android:id="@+id/fragContainer"
     tools:context=".MainActivity">
 
-    <fragment
-        android:id="@+id/fragmentContainerView"
-        class="com.example.ex7.MyGradesFrag"
-        android:layout_width="389dp"
-        android:layout_height="747dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="24dp"
-        android:foregroundGravity="center"
-        android:tag="myGrades"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.313"
-        tools:layout="@layout/course_frag" />
+    <FrameLayout
+        android:id="@+id/fragmentContainer_portrait1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

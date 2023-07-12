@@ -22,12 +22,14 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import java.util.HashSet;
@@ -40,8 +42,10 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
     private final int RECEIVE_SMS_CODE = 2;
     private ReadGradeBySMS smsReceiver;
     private static final String SMS_RECEIVED_ACTION = "android.provider.Telephony.SMS_RECEIVED";
-    private static final int FOREGROUND_PERMISSION_REQUEST_CODE = 100;
-    private static final String FOREGROUND_SERVICE_PERMISSION = "android.permission.FOREGROUND_SERVICE";
+    private FrameLayout fragmentContainer;
+    private FrameLayout fragmentContainer1;
+    private FrameLayout fragmentContainer2;
+
 
 
     @Override
@@ -70,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         super.onCreate(savedInstanceState);
         checkPermissions(Manifest.permission.RECEIVE_SMS,RECEIVE_SMS_CODE, "granted RECEIVE_SMS permission");
         smsReceiver = new ReadGradeBySMS(this);
-
         // Create an intent filter for SMS_RECEIVED_ACTION
         IntentFilter intentFilter = new IntentFilter(SMS_RECEIVED_ACTION);
         // Register the BroadcastReceiver
@@ -78,20 +81,87 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         startService();
         getSupportActionBar().setTitle(R.string.title);
         setContentView(R.layout.activity_main);
-        SelectSpecificCourseFrag fragB = (SelectSpecificCourseFrag) getSupportFragmentManager().findFragmentByTag("FRAGB");
-        if ((getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)){
-            if (fragB != null) {
-                getSupportFragmentManager().beginTransaction()
-                        .show(fragB)
-                        .commit();
-            }
-            else {
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragmentDetailContainerView, SelectSpecificCourseFrag.class,null, "FRAGB")
-                        .commit();
-            }
-            getSupportFragmentManager().executePendingTransactions();
+        fragmentContainer = findViewById(R.id.fragmentContainer_portrait1);
+        fragmentContainer1 = findViewById(R.id.fragmentContainer1_land);
+        fragmentContainer2 = findViewById(R.id.fragmentContainer2_land);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Landscape orientation
+            showTwoFragments(savedInstanceState);
+        } else {
+            // Portrait orientation
+            showOneFragment(savedInstanceState);
         }
+    }
+    private void showOneFragment(Bundle bundle) {
+        Fragment fragment = null;
+        String activeFragment = "MyGradesFrag";
+        if (bundle != null) {
+            activeFragment = bundle.getString("activeFragment_landscape");
+        }
+        if (activeFragment.equals("MyGradesFrag")) {
+//            float grade_avg = bundle.getFloat("grade_avg");
+//            float credit = bundle.getFloat("credit");
+            fragment = new MyGradesFrag();
+        } else if (activeFragment.equals("AllCoursesFrag")) {
+            fragment = new AllCoursesFrag();
+        }
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentContainer_portrait1, fragment)
+                .commit();
+    }
+
+    private void showTwoFragments(Bundle bundle) {
+        Fragment fragment1 = null;
+        String activeFragment = "MyGradesFrag";
+        if (bundle != null) {
+            activeFragment = bundle.getString("activeFragment_portrait");
+        }
+        if(activeFragment.equals("MyGradesFrag")){
+//            float grade_avg = bundle.getFloat("grade_avg");
+//            float credit = bundle.getFloat("credit");
+            fragment1 = new MyGradesFrag();
+        }else if(activeFragment.equals("AllCoursesFrag")){
+            fragment1 = new AllCoursesFrag();
+        }
+        SelectSpecificCourseFrag fragment2 = new SelectSpecificCourseFrag();
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentContainer1_land, fragment1)
+                .add(R.id.fragmentContainer2_land, fragment2)
+                .commit();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Fragment fragment1 = fragmentManager.findFragmentById(R.id.fragmentContainer1_land);
+            String activeFragmentString = "";
+            if (fragment1 instanceof MyGradesFrag) {
+                float grade_avg = ((MyGradesFrag) fragment1).getAdapter().getGradeAvg();
+                float credit = ((MyGradesFrag) fragment1).getAdapter().getTotalCredits();
+                savedInstanceState.putFloat("grade_avg", grade_avg);
+                savedInstanceState.putFloat("credit", credit);
+                activeFragmentString = "MyGradesFrag";
+            } else if (fragment1 instanceof AllCoursesFrag) {
+                activeFragmentString = "AllCoursesFrag";
+            }
+            savedInstanceState.putString("activeFragment_landscape", activeFragmentString);
+        } else {
+            // Portrait orientation
+            Fragment fragment1 = fragmentManager.findFragmentById(R.id.fragmentContainer_portrait1);
+            String activeFragmentString = "";
+            if (fragment1 instanceof MyGradesFrag) {
+                activeFragmentString = "MyGradesFrag";
+            } else if (fragment1 instanceof SelectSpecificCourseFrag) {
+                activeFragmentString = "SelectSpecificCourseFrag";
+            } else if (fragment1 instanceof AllCoursesFrag) {
+                activeFragmentString = "AllCoursesFrag";
+            }
+            savedInstanceState.putString("activeFragment_portrait", activeFragmentString);
+        }
+        super.onSaveInstanceState(savedInstanceState);
+
     }
 
     public void startService() {
@@ -137,45 +207,67 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
 
     @Override
     public void clickCourseToAddGrade(Course course){
+        int container = 0;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
         {
-            Bundle args = new Bundle();
-            args.putString("name", course.getName());
-            args.putString("description", course.getDescription());
-            args.putFloat("grade", course.getGrade());
-            args.putFloat("credit", course.getCredit());
-            getSupportFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.fragContainer, SelectSpecificCourseFrag.class, args,"FRAGB")
-                    .addToBackStack("DDD")
-                    .commit();
-            getSupportFragmentManager().executePendingTransactions();
+            container = R.id.fragmentContainer_portrait1;
         }
+        else{
+            container = R.id.fragmentContainer2_land;
+        }
+        Bundle args = new Bundle();
+        args.putString("name", course.getName());
+        args.putString("description", course.getDescription());
+        args.putFloat("grade", course.getGrade());
+        args.putFloat("credit", course.getCredit());
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .add(container, SelectSpecificCourseFrag.class, args,"FRAGB")
+                .addToBackStack("DDD")
+                .commit();
+        getSupportFragmentManager().executePendingTransactions();
     }
 
     @Override
     public void viewGradeInformation(Course course){
+        int container = 0;
+        Bundle args = null;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
         {
-            Bundle args = new Bundle();
+            container = R.id.fragmentContainer_portrait1;
+        }
+        else{
+            container = R.id.fragmentContainer2_land;
+        }
+        if (course != null){
+            args = new Bundle();
             args.putString("name", course.getName());
             args.putString("description", course.getDescription());
             args.putFloat("grade", course.getGrade());
             args.putFloat("credit", course.getCredit());
-            getSupportFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.fragContainer, SelectSpecificCourseFrag.class, args,"FRAGB")
-                    .addToBackStack("AAA")
-                    .commit();
-            getSupportFragmentManager().executePendingTransactions();
         }
+
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .add(container, SelectSpecificCourseFrag.class, args,"FRAGB")
+                .addToBackStack("AAA")
+                .commit();
+
     }
 
     private void showAllCourses() {
+        int container = 0;
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+        {
+            container = R.id.fragmentContainer_portrait1;
+        }
+        else{
+            container = R.id.fragmentContainer1_land;
+        }
         getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
-                .add(R.id.fragContainer, AllCoursesFrag.class, null,"allCoursesFrag")
+                .add(container, AllCoursesFrag.class, null,"allCoursesFrag")
                 .addToBackStack("BBB")
                 .commit();
     }
@@ -193,8 +285,6 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
     @Override
     protected void onPause() {
         super.onPause();
-        CoursesModel viewModel = new ViewModelProvider(this).get(CoursesModel.class);
-        //viewModel.setSPCountries(this);
     }
 
 
@@ -224,6 +314,5 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
     public void addCourseBySms(Course course) {
         GradesModel viewModel = new ViewModelProvider(this).get(GradesModel.class);
         viewModel.addCourse(course);
-//        Toast.makeText(this, "Course added successfully", Toast.LENGTH_SHORT).show();
     }
 }

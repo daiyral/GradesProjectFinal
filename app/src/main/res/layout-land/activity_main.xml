@@ -1,37 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+    <FrameLayout
+        android:id="@+id/fragmentContainer1_land"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
-    <fragment
-        android:id="@+id/fragmentContainerView"
-        class="com.example.ex7.MyGradesFrag"
-        android:layout_width="217dp"
-        android:layout_height="334dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
-        android:foregroundGravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.033"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout="@layout/course_frag" />
+    <FrameLayout
+        android:id="@+id/fragmentContainer2_land"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
-    <fragment
-        android:id="@+id/fragmentDetailContainerView"
-        class="com.example.ex7.SelectSpecificCourseFrag"
-        android:layout_width="430dp"
-        android:layout_height="299dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="4dp"
-        android:foregroundGravity="center"
-        android:tag="FRAGB"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/course_detail_frag" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

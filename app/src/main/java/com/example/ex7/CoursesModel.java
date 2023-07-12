@@ -37,6 +37,7 @@ public class CoursesModel extends AndroidViewModel {
     private void initAllCourseList()
     {
       dbCourses = FirebaseDatabase.getInstance().getReference("courses");
+
       dbCourses.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -70,10 +71,6 @@ public class CoursesModel extends AndroidViewModel {
         return this.itemSelected;
     }
 
-    public void removeCourse(int position){
-        courseList.remove(position);
-        courseLiveData.setValue(courseList);
-    }
 
     public Course getCourse(int position){
         return this.courseList.get(position);

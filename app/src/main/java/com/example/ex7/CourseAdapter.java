@@ -55,7 +55,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         Course course = courseList.get(position);
         this.selectedPosition = this.viewModel.getPosition();
         if (this.selectedPosition == position)
-            holder.itemView.setBackgroundResource(R.color.white);
+            holder.itemView.setBackgroundResource(R.color.deep_blue);
         else
             holder.itemView.setBackgroundResource(R.color.transparent);
         holder.setCourse(position, course);
@@ -70,8 +70,19 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public void setCoursesList(ArrayList<Course> coursesList){
         this.courseList = coursesList;
         notifyDataSetChanged();
+        updateEmptyView();
     }
-
+    private void updateEmptyView(){
+        TextView empty_list = ((FragmentActivity) context).findViewById(R.id.empty_state_text);
+        RecyclerView recyclerView = ((FragmentActivity) context).findViewById(R.id.courseRecycler);
+        if (getItemCount() == 0) {
+            empty_list.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            empty_list.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView courseName;
         private final TextView description;
