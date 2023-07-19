@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +71,7 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
         Course course = courseList.get(position);
         this.selectedPosition = this.viewModel.getPosition();
         if (this.selectedPosition == position)
-            holder.itemView.setBackgroundResource(R.color.deep_blue);
+            holder.itemView.setBackgroundResource(R.color.white);
         else
             holder.itemView.setBackgroundResource(R.color.transparent);
 
@@ -165,7 +166,6 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
             this.creditPoints.setText(Float.toString(course.getCredit()));
             this.grade.setText(Float.toString(course.getGrade()));
             this.view.setOnLongClickListener(new View.OnLongClickListener() {
-                private final int pos = position;
 
                 @Override
                 public boolean onLongClick(View view) {
@@ -189,26 +189,7 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
                                     editor.putStringSet("my_courses", newCourseSet);
                                     editor.apply();
                                     viewModel.removeCourse(position);
-
-                                    if (position == selectedPosition)
-                                        viewModel.setItemSelected(RecyclerView.NO_POSITION);
-                                    else if (position < selectedPosition)
-                                        viewModel.setItemSelected(selectedPosition - 1);
-                                    if(viewModel.getCourseLiveData().getValue().size()==0){
-                                        listener.viewGradeInformation(null);
-                                    }
-                                    else {
-                                        if (position > viewModel.getCourseLiveData().getValue().size() - 1){
-                                            viewModel.setItemSelected(viewModel.getCourseLiveData().getValue().size() - 1);
-                                            listener.viewGradeInformation(courseList.get(viewModel.getCourseLiveData().getValue().size() - 1));
-                                        }
-                                        else
-                                        {
-                                            viewModel.setItemSelected(position);
-                                            listener.viewGradeInformation(courseList.get(position));
-                                        }
-                                    }
-
+                                    listener.viewGradeInformation(null);
                                     notifyDataSetChanged();
                                 }
                             })

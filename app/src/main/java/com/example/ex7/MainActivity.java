@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(container, SelectSpecificCourseFrag.class, args,"FRAGB")
-//                .addToBackStack("DDD")
+                .addToBackStack("DDD")
                 .commit();
         getSupportFragmentManager().executePendingTransactions();
     }
@@ -274,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
-                .replace(container, AllCoursesFrag.class, null,"allCoursesFrag")
+                .add(container, AllCoursesFrag.class, null,"allCoursesFrag")
                 .addToBackStack("BBB")
                 .commit();
     }
