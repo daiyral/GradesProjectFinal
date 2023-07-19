@@ -238,7 +238,9 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         Bundle args = null;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
         {
+            if(course == null) return;
             container = R.id.fragmentContainer_portrait1;
+
         }
         else{
             container = R.id.fragmentContainer2_land;

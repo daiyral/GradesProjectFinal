@@ -9,40 +9,43 @@
     android:background="#FFFFFF">
 
     <TextView
+        android:layout_marginTop="20dp"
         android:id="@+id/courseName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Course Name"
-        android:textStyle="bold"
         android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/courseDescription"
-        app:layout_constraintVertical_bias="0.099"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.573"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
+        android:layout_marginTop="70dp"
         android:id="@+id/courseDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Details"
-        app:layout_constraintTop_toBottomOf="@id/courseName"
         app:layout_constraintBottom_toTopOf="@id/gradeInput"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.178"
-        />
+        tools:layout_editor_absoluteX="0dp" />
 
     <EditText
         android:id="@+id/gradeInput"
         android:layout_width="246dp"
-        android:layout_height="46dp"
+        android:layout_height="48dp"
         android:gravity="center"
         android:hint="@string/grade_hint"
         android:minHeight="48dp"
-        app:layout_constraintTop_toBottomOf="@id/courseDescription"
         app:layout_constraintBottom_toTopOf="@id/addGradeButton"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/courseDescription"
         app:layout_constraintVertical_bias="0.307" />
 
     <Button
@@ -51,9 +54,11 @@
         android:layout_height="wrap_content"
         android:onClick="addGradeClick"
         android:text="@string/add_grade_btn"
-        app:layout_constraintTop_toBottomOf="@id/gradeInput"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gradeInput"
+        android:layout_marginBottom="100dp"
         app:layout_constraintVertical_bias="0.445" />
 </androidx.constraintlayout.widget.ConstraintLayout>

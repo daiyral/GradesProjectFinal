@@ -188,7 +188,6 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
                                     }
                                     editor.putStringSet("my_courses", newCourseSet);
                                     editor.apply();
-                                    Course course = courseList.get(pos);
                                     viewModel.removeCourse(position);
 
                                     if (position == selectedPosition)
