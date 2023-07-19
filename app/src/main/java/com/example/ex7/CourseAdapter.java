@@ -55,7 +55,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         Course course = courseList.get(position);
         this.selectedPosition = this.viewModel.getPosition();
         if (this.selectedPosition == position)
-            holder.itemView.setBackgroundResource(R.color.deep_blue);
+            holder.itemView.setBackgroundResource(R.color.white);
         else
             holder.itemView.setBackgroundResource(R.color.transparent);
         holder.setCourse(position, course);
