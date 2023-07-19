@@ -120,9 +120,13 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         }
         if(activeFragment.equals("MyGradesFrag")){
             fragment1 = new MyGradesFrag();
+//            if(((MyGradesFrag) fragment1).getModel().getItemSelected() != RecyclerView.NO_POSITION){
+//
+//            };
         }else if(activeFragment.equals("AllCoursesFrag")){
             fragment1 = new AllCoursesFrag();
         }
+
         SelectSpecificCourseFrag fragment2 = new SelectSpecificCourseFrag();
 
         getSupportFragmentManager().beginTransaction()
@@ -150,7 +154,10 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
             if (fragment1 instanceof MyGradesFrag) {
                 activeFragmentString = "MyGradesFrag";
             } else if (fragment1 instanceof SelectSpecificCourseFrag) {
-                activeFragmentString = "SelectSpecificCourseFrag";
+                if(((SelectSpecificCourseFrag) fragment1).getCreator().equals("MyGradesFrag"))
+                    activeFragmentString = "MyGradesFrag";
+                else
+                    activeFragmentString = "AllCoursesFrag";
             } else if (fragment1 instanceof AllCoursesFrag) {
                 activeFragmentString = "AllCoursesFrag";
             }
@@ -212,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
             container = R.id.fragmentContainer2_land;
         }
         Bundle args = new Bundle();
+        args.putString("creator", "AllCoursesFrag");
         args.putString("name", course.getName());
         args.putString("description", course.getDescription());
         args.putFloat("grade", course.getGrade());
@@ -219,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(container, SelectSpecificCourseFrag.class, args,"FRAGB")
-                .addToBackStack("DDD")
+//                .addToBackStack("DDD")
                 .commit();
         getSupportFragmentManager().executePendingTransactions();
     }
@@ -237,6 +245,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         }
         if (course != null){
             args = new Bundle();
+            args.putString("creator", "MyGradesFrag");
             args.putString("name", course.getName());
             args.putString("description", course.getDescription());
             args.putFloat("grade", course.getGrade());

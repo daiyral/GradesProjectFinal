@@ -38,6 +38,8 @@ public class SelectSpecificCourseFrag extends Fragment {
 
     private Float courseCredit = null;
 
+    private String creator;
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -72,6 +74,10 @@ public class SelectSpecificCourseFrag extends Fragment {
         return inflater.inflate(R.layout.add_course_frag, container, false);
     }
 
+    public String getCreator() {
+        return creator;
+    }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         TextView courseName = view.findViewById(R.id.courseName);
@@ -83,6 +89,7 @@ public class SelectSpecificCourseFrag extends Fragment {
             courseDescription.setVisibility(View.VISIBLE);
             gradeInput.setVisibility(View.VISIBLE);
             addGradeButton.setVisibility(View.VISIBLE);
+            this.creator = args.getString("creator");
             this.courseDescription = args.getString("description");
             this.courseName = args.getString("name");
             this.courseGrade = args.getFloat("grade");

@@ -23,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 public class AllCoursesFrag extends Fragment{
 	private AllCoursesFragListener listener;
 	private CoursesModel viewModel;
+
+	private CourseAdapter adapter;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,9 +67,13 @@ public class AllCoursesFrag extends Fragment{
 		super.onViewCreated(view, savedInstanceState);
 		RecyclerView rvCourses = (RecyclerView) view.findViewById(R.id.courseRecycler);
 		viewModel = new ViewModelProvider(requireActivity()).get(CoursesModel.class);
-		CourseAdapter adapter = new CourseAdapter(view.getContext(), getActivity(), viewModel, this.listener);
+		adapter = new CourseAdapter(view.getContext(), getActivity(), viewModel, this.listener);
 		rvCourses.setAdapter(adapter);
 		rvCourses.setLayoutManager(new LinearLayoutManager(view.getContext()));
+	}
+
+	public CoursesModel getModel() {
+		return viewModel;
 	}
 
 	public interface AllCoursesFragListener{

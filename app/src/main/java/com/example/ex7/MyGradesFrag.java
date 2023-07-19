@@ -65,7 +65,9 @@ public class MyGradesFrag extends Fragment {
         credits_text.setVisibility(View.VISIBLE); // Show the TextView
         return view;
     }
-
+    public GradesModel getModel() {
+        return viewModel;
+    }
     @Override
     public void onViewCreated(View view,@Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
