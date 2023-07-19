@@ -270,6 +270,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         }
         else{
             container = R.id.fragmentContainer1_land;
+            viewGradeInformation(null);
         }
         getSupportFragmentManager()
                 .beginTransaction()
