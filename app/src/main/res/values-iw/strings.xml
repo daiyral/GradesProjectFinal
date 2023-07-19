@@ -8,11 +8,13 @@
     <string name="dialog_exit">אתה בטוח שאתה רוצה לצאת?</string>
     <string name="dialog_yes">כן</string>
     <string name="dialog_no">לא</string>
-    <string name="app_language_summary">תבחור שפה רצויה</string>
+    <string name="app_language_summary">תבחר שפה רצויה</string>
     <string name="app_language">שפה</string>
     <string name="preference">העדפות</string>
     <string name="exit">יציאה</string>
     <string name="english">אנגלית</string>
     <string name="hebrew">עברית</string>
     <string name="title">מד ציונים</string>
+    <string name="avg">ממוצע:</string>
+    <string name="credits">נק"ז:</string>
 </resources>

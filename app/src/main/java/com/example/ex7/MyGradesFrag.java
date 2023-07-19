@@ -5,8 +5,11 @@ package com.example.ex7;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MyGradesFrag extends Fragment {
     private myGradesFragListener listener;
     private GradesModel viewModel;
-    
+    private TextView emptyStateText;
+    private RecyclerView recyclerView;
+
     public GradeAdapter adapter;
 
     @Override
@@ -33,13 +38,36 @@ public class MyGradesFrag extends Fragment {
         }
         super.onAttach(context);
     }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
 
+        // Get the menu items you want to show/hide
+        MenuItem addCourseMenuItem = menu.findItem(R.id.add_course);
+
+        // Update the visibility of menu items
+        addCourseMenuItem.setVisible(true);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.course_frag, container,false);
+        View view = inflater.inflate(R.layout.course_frag, container, false);
+        emptyStateText = view.findViewById(R.id.empty_state_text);
+        recyclerView = view.findViewById(R.id.courseRecycler);
+        TextView avg_text = view.findViewById(R.id.gradeAvgView);
+        TextView credits_text = view.findViewById(R.id.creditSum);
+        avg_text.setVisibility(View.VISIBLE); // Show the TextView
+        credits_text.setVisibility(View.VISIBLE); // Show the TextView
+        return view;
     }
-
+    public GradesModel getModel() {
+        return viewModel;
+    }
     @Override
     public void onViewCreated(View view,@Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -50,7 +78,19 @@ public class MyGradesFrag extends Fragment {
         rvCourses.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        RecyclerView rvCourses = getView().findViewById(R.id.courseRecycler);
+        TextView emptyStateText = getView().findViewById(R.id.empty_state_text);
+        if (adapter != null && adapter.getItemCount() == 0) {
+            rvCourses.setVisibility(View.GONE);
+            emptyStateText.setVisibility(View.VISIBLE);
+        } else {
+            rvCourses.setVisibility(View.VISIBLE);
+            emptyStateText.setVisibility(View.GONE);
+        }
+    }
     public GradeAdapter getAdapter(){
         return this.adapter;
     }

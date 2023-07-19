@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 public class AllCoursesFrag extends Fragment{
 	private AllCoursesFragListener listener;
 	private CoursesModel viewModel;
+
+	private CourseAdapter adapter;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,7 +54,12 @@ public class AllCoursesFrag extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.course_frag, container,false);
+		View view = inflater.inflate(R.layout.course_frag, container, false);
+		TextView avg_text = view.findViewById(R.id.gradeAvgView);
+		TextView credits_text = view.findViewById(R.id.creditSum);
+		avg_text.setVisibility(View.GONE); // Show the TextView
+		credits_text.setVisibility(View.GONE); // Show the TextView
+		return view;
 	}
 
 	@Override
@@ -59,9 +67,13 @@ public class AllCoursesFrag extends Fragment{
 		super.onViewCreated(view, savedInstanceState);
 		RecyclerView rvCourses = (RecyclerView) view.findViewById(R.id.courseRecycler);
 		viewModel = new ViewModelProvider(requireActivity()).get(CoursesModel.class);
-		CourseAdapter adapter = new CourseAdapter(view.getContext(), getActivity(), viewModel, this.listener);
+		adapter = new CourseAdapter(view.getContext(), getActivity(), viewModel, this.listener);
 		rvCourses.setAdapter(adapter);
 		rvCourses.setLayoutManager(new LinearLayoutManager(view.getContext()));
+	}
+
+	public CoursesModel getModel() {
+		return viewModel;
 	}
 
 	public interface AllCoursesFragListener{
