@@ -39,6 +39,11 @@ public class MyGradesFrag extends Fragment {
         super.onAttach(context);
     }
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
@@ -54,7 +59,10 @@ public class MyGradesFrag extends Fragment {
         View view = inflater.inflate(R.layout.course_frag, container, false);
         emptyStateText = view.findViewById(R.id.empty_state_text);
         recyclerView = view.findViewById(R.id.courseRecycler);
-
+        TextView avg_text = view.findViewById(R.id.gradeAvgView);
+        TextView credits_text = view.findViewById(R.id.creditSum);
+        avg_text.setVisibility(View.VISIBLE); // Show the TextView
+        credits_text.setVisibility(View.VISIBLE); // Show the TextView
         return view;
     }
 

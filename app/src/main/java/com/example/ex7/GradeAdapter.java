@@ -91,13 +91,17 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
     private void updateEmptyView(){
         TextView empty_list = ((FragmentActivity) context).findViewById(R.id.empty_state_text);
         RecyclerView recyclerView = ((FragmentActivity) context).findViewById(R.id.courseRecycler);
-        if (getItemCount() == 0) {
-            empty_list.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        } else {
-            empty_list.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
+        if (empty_list != null && recyclerView != null)
+        {
+            if (getItemCount() == 0) {
+                empty_list.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            } else {
+                empty_list.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }
         }
+
     }
     public void updateAvg(Context context){
         float totalGradeCreditSum = 0;
@@ -120,10 +124,17 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
             this.gradeAvg=0;
             this.totalCredits=0;
         }
+
         TextView avgView = ((FragmentActivity) context).findViewById(R.id.gradeAvgView);
         TextView creditsView = ((FragmentActivity) context).findViewById(R.id.creditSum);
-        avgView.setText(String.format("Your average: %.2f", this.gradeAvg));
-        creditsView.setText(String.format("Your credits: %.2f", this.totalCredits));
+        if(avgView!=null && creditsView!=null){
+            String avg, credits;
+            avg = String.format("%.2f", this.gradeAvg);
+            credits = String.format("%.2f", this.totalCredits);
+            avgView.setText(avgView.getText().toString().split(":")[0] + ": " + avg);
+            creditsView.setText(creditsView.getText().toString().split(":")[0] + ": " + credits);
+        }
+
     }
 
 
@@ -188,10 +199,15 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
                                         listener.viewGradeInformation(null);
                                     }
                                     else {
-                                        if (position > viewModel.getCourseLiveData().getValue().size() - 1)
+                                        if (position > viewModel.getCourseLiveData().getValue().size() - 1){
+                                            viewModel.setItemSelected(viewModel.getCourseLiveData().getValue().size() - 1);
                                             listener.viewGradeInformation(courseList.get(viewModel.getCourseLiveData().getValue().size() - 1));
+                                        }
                                         else
+                                        {
+                                            viewModel.setItemSelected(position);
                                             listener.viewGradeInformation(courseList.get(position));
+                                        }
                                     }
 
                                     notifyDataSetChanged();

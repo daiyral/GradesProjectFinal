@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,7 +52,12 @@ public class AllCoursesFrag extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.course_frag, container,false);
+		View view = inflater.inflate(R.layout.course_frag, container, false);
+		TextView avg_text = view.findViewById(R.id.gradeAvgView);
+		TextView credits_text = view.findViewById(R.id.creditSum);
+		avg_text.setVisibility(View.GONE); // Show the TextView
+		credits_text.setVisibility(View.GONE); // Show the TextView
+		return view;
 	}
 
 	@Override

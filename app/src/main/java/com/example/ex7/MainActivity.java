@@ -96,17 +96,17 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         Fragment fragment = null;
         String activeFragment = "MyGradesFrag";
         if (bundle != null) {
-            activeFragment = bundle.getString("activeFragment_landscape");
+            if (bundle.containsKey("activeFragment_landscape")) {
+                activeFragment = bundle.getString("activeFragment_landscape");
+            }
         }
         if (activeFragment.equals("MyGradesFrag")) {
-//            float grade_avg = bundle.getFloat("grade_avg");
-//            float credit = bundle.getFloat("credit");
             fragment = new MyGradesFrag();
         } else if (activeFragment.equals("AllCoursesFrag")) {
             fragment = new AllCoursesFrag();
         }
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainer_portrait1, fragment)
+                .replace(R.id.fragmentContainer_portrait1, fragment)
                 .commit();
     }
 
@@ -114,11 +114,11 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         Fragment fragment1 = null;
         String activeFragment = "MyGradesFrag";
         if (bundle != null) {
-            activeFragment = bundle.getString("activeFragment_portrait");
+            if (bundle.containsKey("activeFragment_portrait")) {
+                activeFragment = bundle.getString("activeFragment_portrait");
+            }
         }
         if(activeFragment.equals("MyGradesFrag")){
-//            float grade_avg = bundle.getFloat("grade_avg");
-//            float credit = bundle.getFloat("credit");
             fragment1 = new MyGradesFrag();
         }else if(activeFragment.equals("AllCoursesFrag")){
             fragment1 = new AllCoursesFrag();
@@ -126,8 +126,8 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         SelectSpecificCourseFrag fragment2 = new SelectSpecificCourseFrag();
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainer1_land, fragment1)
-                .add(R.id.fragmentContainer2_land, fragment2)
+                .replace(R.id.fragmentContainer1_land, fragment1)
+                .replace(R.id.fragmentContainer2_land, fragment2)
                 .commit();
     }
 
@@ -138,10 +138,6 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
             Fragment fragment1 = fragmentManager.findFragmentById(R.id.fragmentContainer1_land);
             String activeFragmentString = "";
             if (fragment1 instanceof MyGradesFrag) {
-                float grade_avg = ((MyGradesFrag) fragment1).getAdapter().getGradeAvg();
-                float credit = ((MyGradesFrag) fragment1).getAdapter().getTotalCredits();
-                savedInstanceState.putFloat("grade_avg", grade_avg);
-                savedInstanceState.putFloat("credit", credit);
                 activeFragmentString = "MyGradesFrag";
             } else if (fragment1 instanceof AllCoursesFrag) {
                 activeFragmentString = "AllCoursesFrag";
@@ -222,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         args.putFloat("credit", course.getCredit());
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
-                .add(container, SelectSpecificCourseFrag.class, args,"FRAGB")
+                .replace(container, SelectSpecificCourseFrag.class, args,"FRAGB")
                 .addToBackStack("DDD")
                 .commit();
         getSupportFragmentManager().executePendingTransactions();
@@ -249,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
 
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
-                .add(container, SelectSpecificCourseFrag.class, args,"FRAGB")
+                .replace(container, SelectSpecificCourseFrag.class, args,"FRAGB")
                 .addToBackStack("AAA")
                 .commit();
 
@@ -267,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
         getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
-                .add(container, AllCoursesFrag.class, null,"allCoursesFrag")
+                .replace(container, AllCoursesFrag.class, null,"allCoursesFrag")
                 .addToBackStack("BBB")
                 .commit();
     }
