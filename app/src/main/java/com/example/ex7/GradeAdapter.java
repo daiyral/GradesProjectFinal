@@ -71,7 +71,7 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
         Course course = courseList.get(position);
         this.selectedPosition = this.viewModel.getPosition();
         if (this.selectedPosition == position)
-            holder.itemView.setBackgroundResource(R.color.white);
+            holder.itemView.setBackgroundResource(R.color.deep_blue);
         else
             holder.itemView.setBackgroundResource(R.color.transparent);
 
@@ -190,6 +190,7 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
                                     editor.apply();
                                     viewModel.removeCourse(position);
                                     listener.viewGradeInformation(null);
+                                    selectedPosition = RecyclerView.NO_POSITION;
                                     notifyDataSetChanged();
                                 }
                             })

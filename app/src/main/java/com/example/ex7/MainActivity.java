@@ -300,6 +300,7 @@ public class MainActivity extends AppCompatActivity implements MyGradesFrag.myGr
     public void updateMyGradeList(Course course) {
         GradesModel viewModel = new ViewModelProvider(this).get(GradesModel.class);
         viewModel.addCourse(course);
+        viewModel.setItemSelected(-1);
     }
 
     @Override
